@@ -2,9 +2,11 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2306.05301-<COLOR>.svg?style=flat-square)](https://arxiv.org/abs/2306.05301)
 
+<div align=center><img src="./figures/ToolAlpaca.png" width="400px" /></div>
+
 `ToolAlpaca` is a framework designed for learning generalized tool-use abilities in compact language models with minimal human supervision. It addresses the challenge of tool learning by generating a tool-use corpus via a multi-agent simulation environment, providing 3.9k tool-use instances from more than 400 tools. 
 
-<div align=center><img src="./figures/pipeline.png" width="600px" /></div>
+<div align=center><img src="./figures/pipeline.png" width="500px" /></div>
 
 
 

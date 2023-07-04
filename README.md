@@ -12,6 +12,7 @@
 
 ## News
 
+- [07/04] We release the validation data.
 - [06/14] We release the ToolAlpaca corpus with 3.9k instances.
 
 

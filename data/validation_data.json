@@ -12,7 +12,7 @@
             "getAxolotlFacts": "Retrieve interesting facts about axolotls such as their habits, habitats, and physical characteristics.\nParameters: {\"category\": \"string. One of: [habits, habitat, physical characteristics]. The category of facts to retrieve (e.g., 'habits', 'habitat', 'physical characteristics').\", \"limit\": \"integer. The maximum number of facts to return.\"}\nOutput: Successful response.\n - Format: application/json\n - Structure: Array[Object{fact, source}]",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "Hey, can you show me a random picture of an axolotl?",
             "I'm looking for an axolotl that is wild in color and medium in size. Can you help me find some pictures?",
             "Can you tell me three interesting facts about axolotls' habitats?",
@@ -41,7 +41,7 @@
             "synchronizeTracking": "Synchronize an anime's watch progress with a tracking service.\nParameters: {\"animeId\": \"Required. integer. The unique identifier of the anime.\", \"trackingService\": \"string.\", \"progress\": \"integer.\"}\nOutput: Returns a confirmation message indicating the successful synchronization of the anime's watch progress with the specified tracking service.\n - Format: application/json\n - Structure: Object{message}",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "Hey, can you look up the cast of \"Attack on Titan\" and send me a list of their character roles?",
             "I'm in the mood for a new anime to watch but don't know where to start. Can you find me some mystery and action anime options that were released in 2020 and have a user rating of at least 4 stars?",
             "I want to watch \"Your Lie in April.\" Can you tell me where I can stream it?",
@@ -67,7 +67,7 @@
             "searchReports": "Search the AbuseIPDB database for abuse reports based on various criteria.\nParameters: {\"ip\": \"string. The IP address or domain to search for.\", \"categories\": \"Array[string].  Filter the search by specific abuse categories.\", \"startDate\": \"string. The start date for the search (format: YYYY-MM-DD).\", \"endDate\": \"string. The end date for the search (format: YYYY-MM-DD).\", \"page\": \"integer. The page number for paginated results (default is 1).\", \"perPage\": \"integer. The number of results per page (default is 10).\"}\nOutput: The abuse reports matching the search criteria.\n - Format: application/json\n - Structure: Object{totalResults, reports: Array[Object{reportId, ip, category, comment}], currentPage, totalPages}",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "Hey, can you report an abusive IP address to the abuse database and set the categories as malware and phishing?\"",
             "I've been dealing with a malicious IP address trying to access my system. Can you help me report this address, 192.168.1.100, and let's categorize it as \"brute-force\" and \"DDoS\"? Also, include a comment saying \"Multiple failed login attempts and DDoS attacks.\"",
             "\"Can you please check if the IP address '123.45.67.89' has any reputation score in the database, and show me the list of associated abuse reports?\"",
@@ -96,7 +96,7 @@
             "listServerMembers": "List the members of a Discord server.\nParameters: {\"serverId\": \"Required. string. Discord server ID.\", \"limit\": \"integer. The maximum number of members to return.\", \"offset\": \"integer. The number of members to skip before starting to return results.\"}\nOutput: List of server members.\n - Format: application/json\n - Structure: Array[Object{id, username, discriminator}]",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "\"Can you generate a custom avatar image for me on Discord using my preferred art style and image format?\"",
             "I just joined a new Discord server and I want my avatar to stand out. Can you create a unique avatar for me with a \"grunge\" style in \"png\" format? My Discord user ID is \"123456789\"",
             "\"I want to find a user on Discord, but I only have their username. Can you search for them based on that information?\"",
@@ -130,7 +130,7 @@
             "verifyPasswordlessAuthentication": "Verify the user's passwordless authentication using the provided verification code.\nParameters: {\"provider\": \"Required. string. The identity provider used for passwordless authentication. One of: [sms, email].\", \"identifier\": \"Required. string. The user's phone number or email address, depending on the chosen provider.\", \"verificationCode\": \"Required. string. The verification code sent to the user's phone number or email address.\"}\nOutput: The access token for the authenticated user.\n - Format: application/json\n - Structure: Object{accessToken, userId, expiresIn}",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "I need to log in with my Facebook account, using my email john.doe@gmail.com and my password \"Pa$$w0rd\". Could you please authenticate me and let me know if the process is successful?",
             "I successfully logged in with Google, and my access token is \"abcd1234\" and my user ID is \"g-user123\". Can you fetch my user profile to show me my details?",
             "I'd like to update my profile with a new profile picture URL, \"https://example.com/new_image.jpg\". I have the access token \"abcd1234\" and my user ID is \"g-user123.\" Can you help me make this change?",
@@ -160,7 +160,7 @@
             "listLanguages": "Retrieve a list of languages supported by the API for holiday descriptions.\nParameters: {}\nOutput: A list of languages supported by the API, with their language codes and names.\n - Format: application/json\n - Structure: Array[Object{code, name}]",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "I'm planning a trip to Japan next year, and I want to avoid any major holidays, so can you tell me the list of holidays in Japan for 2023? Also, please provide their descriptions in English.",
             "What are the details on Boxing Day?",
             "Can you search for any holidays related to Easter in Canada in April?",
@@ -189,7 +189,7 @@
             "getQuotes": "Get quotes for precious metals and cryptocurrencies.\nParameters: {\"symbols\": \"Required. string. Comma-separated list of precious metal or cryptocurrency codes to get quotes for.\"}\nOutput: Successful response.\n - Format: application/json\n - Structure: Array[Object{symbol, bid, ask, timestamp}]",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "I'm planning to travel to Japan next month, and I want to know the current exchange rate for converting USD to JPY. Also, I'd like to see how the exchange rate has changed over the past month. Can you help me with that?",
             "I have 5000 EUR that I want to convert to GBP. Can you tell me how much I would get in GBP after the conversion? Also, please set an alert for me if the EUR/GBP exchange rate goes above 0.9.",
             "I'm interested in investing in gold and Bitcoin. Can you provide me with the current quotes for both of these assets? Additionally, I'd like to know the historical data for the BTC/USD pair for the last year.",
@@ -218,7 +218,7 @@
             "searchVerses": "Search for verses in the Bible containing a specific text.\nParameters: {\"text\": \"Required. string. The text to search for in the Bible.\", \"version\": \"string. The version of the Bible you want to search in.\", \"language\": \"string. The language you want to search in.\"}\nOutput: A list of verses containing the specified text, version, and language.\n - Format: application/json\n - Structure: #SearchVersesResponse",
             "components": "The detailed output format for the tools is outlined below:\n#VerseResponse: Object{verse, metadata: Object{date, author, version}}\n#ChapterResponse: Object{chapter, verses: Array[#VerseResponse], metadata: Object{date, author, version}}\n#BookMetadataResponse: Object{book, metadata: Object{date, author, version}}\n#BibleVersionListResponse: Object{versions: Array[string]}\n#BibleLanguagesResponse: Object{languages: Array[string]}\n#SearchVersesResponse: Array[#VerseResponse]\n#VerseMetadata: Object{date, author, version}\n#ChapterMetadata: Object{date, author, version}\n#BookMetadata: Object{date, author, version}"
         },
-        "Questions": [
+        "Instructions": [
             "Can you tell me the list of available Bible versions using the Bible Digital API?",
             "I want to read the content of chapter 3 in the book of Job from the New International Version. Please retrieve this chapter for me, including the chapter number, book name, version name, and all the verses with their respective verse numbers and text.",
             "Retrieve the text of Proverbs 18:24 from the Bible Digital API.",
@@ -249,7 +249,7 @@
             "embedDashboard": "Embed a dashboard into another application\nParameters: {\"dashboardId\": \"integer. The unique ID of the dashboard to be embedded.\", \"targetApp\": \"string. The name of the application into which the dashboard is to be embedded.\"}\nOutput: Successful embedding of the dashboard.\n - Format: application/json\n - Structure: #EmbedDashboardResponse",
             "components": "The detailed output format for the tools is outlined below:\n#CreateDashboardRequest: Object{dashboardName, description, charts: Array[string]}\n#CreateDashboardResponse: Object{dashboardId, dashboardURL}\n#UpdateDashboardRequest: Object{dashboardId, dashboardName, description, charts: Array[string]}\n#UpdateDashboardResponse: Object{dashboardId, dashboardName, description, charts: Array[string]}\n#DeleteDashboardResponse: Object{message}\n#CreateDataSourceRequest: Object{sourceName, connectionString, type}\n#CreateDataSourceResponse: Object{sourceId}\n#UpdateDataSourceRequest: Object{sourceId, sourceName, connectionString, type}\n#UpdateDataSourceResponse: Object{sourceId, sourceName, connectionString, type}\n#DeleteDataSourceResponse: Object{message}\n#ManagePermissionsRequest: Object{targetId, targetType, permissions: Array[string], users: Array[string]}\n#ManagePermissionsResponse: Object{message}\n#ConfigureAlertsRequest: Object{email, frequency}\n#ConfigureAlertsResponse: Object{message}\n#EmbedDashboardRequest: Object{dashboardId, targetApp}\n#EmbedDashboardResponse: Object{embedCode}"
         },
-        "Questions": [
+        "Instructions": [
             "It seems like the connection string for data source ID 85 has changed. Can you update it with the new string \"postgres://user:password@newhost/dbname\"? Also, change its name to \"Updated Sales Data\".",
             "I no longer require the data source with ID 93 in my project. Can you delete it for me, please?",
             "Hey, I just realized I'm dealing with lots of data and manual spreadsheets are no longer cutting it. Can you help me set up a dashboard? Let's call it \"Sales Overview\", and include charts for \"Quarterly Sales\", \"Product Category Sales\", and \"Regional Sales\". After setting it up, I want you to adjust the permissions so that only I and my sales team can access it.",
@@ -275,7 +275,7 @@
             "standardizeUSAddress": "Standardize a given US address to create consistency and accuracy in addressing.\nParameters: {\"addressLine1\": \"Required. string. The primary address line, including street number and name.\", \"addressLine2\": \"string. The secondary address line, such as apartment or suite number.\", \"city\": \"Required. string. The city of the address.\", \"state\": \"Required. string. The state or territory of the address.\", \"zipCode\": \"Required. string. The 5-digit ZIP code of the address.\"}\nOutput: Address standardization successful.\n - Format: application/json\n - Structure: Object{standardizedAddress: Object{addressLine1, addressLine2, city, state, zipCode}}",
             "components": ""
         },
-        "Questions": [
+        "Instructions": [
             "I'm sending a package to my friend in New York, but I'm not sure if I have the correct address. Can you check if this address is valid and deliverable? Here's the address: 123 Main St, Apt 4B, New York, NY, 10001.",
             "I'm organizing a mailing list for my business, and I want to make sure all the addresses are standardized. Can you help me standardize this address? 456 Elm Street, Suite 789, Los Angeles, CA, 90012.",
             "I received a letter with an address that seems a bit off. Can you verify if it's valid and also standardize it for me? The address is: 987 Oak St, Flr 2, San Francisco, CA, 94107.",

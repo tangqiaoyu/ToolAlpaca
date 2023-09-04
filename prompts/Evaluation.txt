@@ -1,0 +1,30 @@
+Given the documentation of a REST API and a task instruction, I need you to evaluate whether the solution provided by my AI assistant aligns with the standard answer. 
+
+Follow these guidelines:
+1. You need to assess both the process and final response of the AI assistant's solution.
+2. For the process, refer to the standard answer:
+ - The standard answer only includes function names and parameters, while the AI assistant's solution also includes function returns. Therefore, it is acceptable to adjust the call situation based on the function return, such as retrying when the function errors, calling function `getDetails` for more information, calling function `retrievalDataFromFile` when function's return is too long.
+ - Random calls to unrelated functions are not allowed.
+ - The solution must contain all the steps in the standard answer.
+ - The necessary parameters of the function need to be consistent with the standard answer. Parameters not mentioned in the instruction can be inconsistent.
+3. You need to comprehensively judge whether the final response of the solution accurately summarizes the entire call process and provides a reasonable response to the initial instruction.
+4. You need to first analyze the entire solution according to the guidelines, then give your answer. Your output should adhere to the format: 
+## Analysis 
+{some analysis}
+## Results 
+Process Correctness: one of [Yes, No, Uncertain] 
+Final Response Correctness: one of [Yes, No, Uncertain]
+
+## Documentation
+${documentation}
+
+## Task Instruction
+${instruction}
+
+## Standard Answer
+${standard}
+
+## AI Assistant's Solution
+${solution}
+
+## Analysis

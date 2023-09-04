@@ -1,0 +1,1342 @@
+[
+    {
+        "Name": "Nager.Date",
+        "Description": "Public holidays for more than 90 countries",
+        "Category": "Calendar",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{\"openapi\": \"3.0.1\", \"info\": {\"title\": \"Nager.Date API - V3\", \"description\": \"Nager.Date is open source software. If you would like to support the project you can award a GitHub star \\u2b50 or much better <a href='https://github.com/sponsors/nager'>start a sponsorship</a>\", \"contact\": {\"name\": \"Nager.Date on GitHub\", \"url\": \"https://github.com/nager/Nager.Date\"}, \"license\": {\"name\": \"MIT License\", \"url\": \"https://github.com/nager/Nager.Date/blob/master/LICENSE.md\"}, \"version\": \"v3\"}, \"servers\": [{\"url\": \"https://date.nager.at/\"}], \"paths\": {\"/api/v3/CountryInfo/{countryCode}\": {\"get\": {\"tags\": [\"Country\"], \"summary\": \"Get country info for the given country\", \"operationId\": \"CountryCountryInfo\", \"parameters\": [{\"name\": \"countryCode\", \"description\": \"Two-character represented country code. For instance, CN or cn represents China.\", \"in\": \"path\", \"required\": true, \"style\": \"simple\", \"explode\": false, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"text/plain\": {\"schema\": {\"$ref\": \"#/components/schemas/CountryInfoDto\"}}, \"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/CountryInfoDto\"}}, \"text/json\": {\"schema\": {\"$ref\": \"#/components/schemas/CountryInfoDto\"}}}}}}}, \"/api/v3/AvailableCountries\": {\"get\": {\"tags\": [\"Country\"], \"summary\": \"Get all available countries\", \"operationId\": \"CountryAvailableCountries\", \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"text/plain\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/CountryV3Dto\"}}}, \"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/CountryV3Dto\"}}}, \"text/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/CountryV3Dto\"}}}}}}}}, \"/api/v3/LongWeekend/{year}/{countryCode}\": {\"get\": {\"tags\": [\"LongWeekend\"], \"summary\": \"Get long weekends for a given country\", \"operationId\": \"LongWeekendLongWeekend\", \"parameters\": [{\"name\": \"year\", \"in\": \"path\", \"required\": true, \"style\": \"simple\", \"explode\": false, \"schema\": {\"type\": \"integer\", \"format\": \"int32\"}}, {\"name\": \"countryCode\", \"in\": \"path\", \"description\": \"Two-character represented country code. For instance, CN or cn represents China.\", \"required\": true, \"style\": \"simple\", \"explode\": false, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"text/plain\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/LongWeekendV3Dto\"}}}, \"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/LongWeekendV3Dto\"}}}, \"text/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/LongWeekendV3Dto\"}}}}}}}}, \"/api/v3/PublicHolidays/{year}/{countryCode}\": {\"get\": {\"tags\": [\"PublicHoliday\"], \"summary\": \"Get public holidays\", \"operationId\": \"PublicHolidayPublicHolidaysV3\", \"parameters\": [{\"name\": \"year\", \"in\": \"path\", \"required\": true, \"style\": \"simple\", \"explode\": false, \"schema\": {\"type\": \"integer\", \"format\": \"int32\"}}, {\"name\": \"countryCode\", \"in\": \"path\", \"description\": \"Two-character represented country code. For instance, CN or cn represents China.\", \"required\": true, \"style\": \"simple\", \"explode\": false, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Public holidays\", \"content\": {\"text/plain\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}, \"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}, \"text/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}}}, \"400\": {\"description\": \"Validation failure\"}, \"404\": {\"description\": \"CountryCode is unknown\"}}}}, \"/api/v3/IsTodayPublicHoliday/{countryCode}\": {\"get\": {\"tags\": [\"PublicHoliday\"], \"summary\": \"Is today a public holiday\", \"description\": \"The calculation is made on the basis of UTC time to adjust the time please use the offset.<br />\\r\\nThis is a special endpoint for `curl`<br /><br />\\r\\n200 = Today is a public holiday<br />\\r\\n204 = Today is not a public holiday<br /><br />\\r\\n`STATUSCODE=$(curl --silent --output /dev/stderr --write-out \\\"%{http_code}\\\" https://date.nager.at/Api/v2/IsTodayPublicHoliday/AT)`<br /><br />\\r\\n`if [ $STATUSCODE -ne 200 ]; then # error handling; fi`\", \"operationId\": \"PublicHolidayIsTodayPublicHoliday\", \"parameters\": [{\"name\": \"countryCode\", \"in\": \"path\", \"description\": \"Two-character represented country code. For instance, CN or cn represents China.\", \"required\": true, \"style\": \"simple\", \"explode\": false, \"schema\": {\"type\": \"string\"}}, {\"name\": \"countyCode\", \"in\": \"query\", \"required\": false, \"style\": \"form\", \"explode\": true, \"schema\": {\"type\": \"string\"}}, {\"name\": \"offset\", \"in\": \"query\", \"description\": \"utc timezone offset\", \"required\": false, \"style\": \"form\", \"explode\": true, \"schema\": {\"maximum\": 12, \"minimum\": -12, \"type\": \"integer\", \"format\": \"int32\", \"default\": 0}}], \"responses\": {\"200\": {\"description\": \"Today is a public holiday\"}, \"204\": {\"description\": \"Today is not a public holiday\"}, \"400\": {\"description\": \"Validation failure\"}, \"404\": {\"description\": \"CountryCode is unknown\"}}}}, \"/api/v3/NextPublicHolidays/{countryCode}\": {\"get\": {\"tags\": [\"PublicHoliday\"], \"summary\": \"Returns the upcoming public holidays for the next 365 days for the given country\", \"operationId\": \"PublicHolidayNextPublicHolidays\", \"parameters\": [{\"name\": \"countryCode\", \"in\": \"path\", \"description\": \"Two-character represented country code. For instance, CN or cn represents China.\", \"required\": true, \"style\": \"simple\", \"explode\": false, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"text/plain\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}, \"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}, \"text/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}}}}}}, \"/api/v3/NextPublicHolidaysWorldwide\": {\"get\": {\"tags\": [\"PublicHoliday\"], \"summary\": \"Returns the upcoming public holidays for the next 7 days\", \"operationId\": \"PublicHolidayNextPublicHolidaysWorldwide\", \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"text/plain\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}, \"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}, \"text/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayV3Dto\"}}}}}}}}, \"/api/v3/Version\": {\"get\": {\"tags\": [\"Version\"], \"summary\": \"Get version of the used Nager.Date library\", \"operationId\": \"VersionGetVersion\", \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"text/plain\": {\"schema\": {\"$ref\": \"#/components/schemas/VersionInfoDto\"}}, \"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/VersionInfoDto\"}}, \"text/json\": {\"schema\": {\"$ref\": \"#/components/schemas/VersionInfoDto\"}}}}}}}}, \"components\": {\"schemas\": {\"CountryInfoDto\": {\"type\": \"object\", \"properties\": {\"commonName\": {\"type\": \"string\", \"description\": \"CommonName\", \"nullable\": true}, \"officialName\": {\"type\": \"string\", \"description\": \"OfficialName\", \"nullable\": true}, \"countryCode\": {\"type\": \"string\", \"description\": \"Two-character represented country code. For instance, CN or cn represents China.\", \"nullable\": true}, \"region\": {\"type\": \"string\", \"description\": \"Region\", \"nullable\": true}, \"borders\": {\"type\": \"array\", \"description\": \"Country Borders\", \"nullable\": true, \"items\": {\"$ref\": \"#/components/schemas/CountryInfoDto\"}}}, \"additionalProperties\": false, \"description\": \"CountryInfo Dto\"}, \"CountryV3Dto\": {\"type\": \"object\", \"properties\": {\"countryCode\": {\"type\": \"string\", \"nullable\": true}, \"name\": {\"type\": \"string\", \"nullable\": true}}, \"additionalProperties\": false, \"description\": \"Country\"}, \"LongWeekendV3Dto\": {\"type\": \"object\", \"properties\": {\"startDate\": {\"type\": \"string\", \"description\": \"StartDate\", \"format\": \"date-time\"}, \"endDate\": {\"type\": \"string\", \"description\": \"EndDate\", \"format\": \"date-time\"}, \"dayCount\": {\"type\": \"integer\", \"description\": \"DayCount\", \"format\": \"int32\"}, \"needBridgeDay\": {\"type\": \"boolean\", \"description\": \"NeedBridgeDay\"}}, \"additionalProperties\": false, \"description\": \"Long Weekend\"}, \"PublicHolidayType\": {\"type\": \"string\", \"enum\": [\"Public\", \"Bank\", \"School\", \"Authorities\", \"Optional\", \"Observance\"]}, \"PublicHolidayV3Dto\": {\"type\": \"object\", \"properties\": {\"date\": {\"type\": \"string\", \"description\": \"The date\", \"format\": \"date\"}, \"localName\": {\"type\": \"string\", \"description\": \"Local name\", \"nullable\": true}, \"name\": {\"type\": \"string\", \"description\": \"English name\", \"nullable\": true}, \"countryCode\": {\"type\": \"string\", \"description\": \"ISO 3166-1 alpha-2\", \"nullable\": true}, \"fixed\": {\"type\": \"boolean\", \"description\": \"Is this public holiday every year on the same date\"}, \"global\": {\"type\": \"boolean\", \"description\": \"Is this public holiday in every county (federal state)\"}, \"counties\": {\"type\": \"array\", \"description\": \"ISO-3166-2 - Federal states\", \"nullable\": true, \"items\": {\"type\": \"string\"}}, \"launchYear\": {\"type\": \"integer\", \"description\": \"The launch year of the public holiday\", \"format\": \"int32\", \"nullable\": true}, \"types\": {\"type\": \"array\", \"description\": \"A list of types the public holiday it is valid\", \"nullable\": true, \"items\": {\"$ref\": \"#/components/schemas/PublicHolidayType\"}}}, \"additionalProperties\": false, \"description\": \"Public Holiday\"}, \"VersionInfoDto\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\", \"nullable\": true}, \"version\": {\"type\": \"string\", \"nullable\": true}}, \"additionalProperties\": false}}}}",
+        "NLDocumentation": "CountryCountryInfo: Get country info for the given country\nParameters: {\"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Success.\n - Format: text/plain\n - Structure: #CountryInfoDto\nCountryAvailableCountries: Get all available countries\nParameters: {}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#CountryV3Dto]\nLongWeekendLongWeekend: Get long weekends for a given country\nParameters: {\"year\": \"Required. integer. \", \"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#LongWeekendV3Dto]\nPublicHolidayPublicHolidaysV3: Get public holidays\nParameters: {\"year\": \"Required. integer. \", \"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Public holidays.\n - Format: text/plain\n - Structure: Array[#PublicHolidayV3Dto]\nPublicHolidayIsTodayPublicHoliday: Is today a public holiday\nParameters: {\"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\", \"countyCode\": \"string. \", \"offset\": \"integer. utc timezone offset.\"}\nOutput: Today is a public holiday.\n - Format: \n - Structure: \nPublicHolidayNextPublicHolidays: Returns the upcoming public holidays for the next 365 days for the given country\nParameters: {\"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#PublicHolidayV3Dto]\nPublicHolidayNextPublicHolidaysWorldwide: Returns the upcoming public holidays for the next 7 days\nParameters: {}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#PublicHolidayV3Dto]\nVersionGetVersion: Get version of the used Nager.Date library\nParameters: {}\nOutput: Success.\n - Format: text/plain\n - Structure: #VersionInfoDto\n\nThe detailed output format for the tools is outlined below:\n#CountryInfoDto: Object{commonName, officialName, countryCode, region, borders: Array[#CountryInfoDto]}\n#CountryV3Dto: Object{countryCode, name}\n#LongWeekendV3Dto: Object{startDate, endDate, dayCount, needBridgeDay}\n#PublicHolidayType: \n#PublicHolidayV3Dto: Object{date, localName, name, countryCode, fixed, global, counties: Array[string], launchYear, types: Array[#PublicHolidayType]}\n#VersionInfoDto: Object{name, version}\n",
+        "Function_Description": {
+            "CountryCountryInfo": "Get country info for the given country\nParameters: {\"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Success.\n - Format: text/plain\n - Structure: #CountryInfoDto",
+            "CountryAvailableCountries": "Get all available countries\nParameters: {}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#CountryV3Dto]",
+            "LongWeekendLongWeekend": "Get long weekends for a given country\nParameters: {\"year\": \"Required. integer. \", \"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#LongWeekendV3Dto]",
+            "PublicHolidayPublicHolidaysV3": "Get public holidays\nParameters: {\"year\": \"Required. integer. \", \"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Public holidays.\n - Format: text/plain\n - Structure: Array[#PublicHolidayV3Dto]",
+            "PublicHolidayIsTodayPublicHoliday": "Is today a public holiday\nParameters: {\"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\", \"countyCode\": \"string. \", \"offset\": \"integer. utc timezone offset.\"}\nOutput: Today is a public holiday.\n - Format: \n - Structure:",
+            "PublicHolidayNextPublicHolidays": "Returns the upcoming public holidays for the next 365 days for the given country\nParameters: {\"countryCode\": \"Required. string. Two-character represented country code. For instance, CN or cn represents China.\"}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#PublicHolidayV3Dto]",
+            "PublicHolidayNextPublicHolidaysWorldwide": "Returns the upcoming public holidays for the next 7 days\nParameters: {}\nOutput: Success.\n - Format: text/plain\n - Structure: Array[#PublicHolidayV3Dto]",
+            "VersionGetVersion": "Get version of the used Nager.Date library\nParameters: {}\nOutput: Success.\n - Format: text/plain\n - Structure: #VersionInfoDto",
+            "components": "The detailed output format for the tools is outlined below:\n#CountryInfoDto: Object{commonName, officialName, countryCode, region, borders: Array[#CountryInfoDto]}\n#CountryV3Dto: Object{countryCode, name}\n#LongWeekendV3Dto: Object{startDate, endDate, dayCount, needBridgeDay}\n#PublicHolidayType: \n#PublicHolidayV3Dto: Object{date, localName, name, countryCode, fixed, global, counties: Array[string], launchYear, types: Array[#PublicHolidayType]}\n#VersionInfoDto: Object{name, version}"
+        },
+        "Function_Projection": {
+            "CountryCountryInfo": [
+                "/api/v3/CountryInfo/{countryCode}",
+                "get"
+            ],
+            "CountryAvailableCountries": [
+                "/api/v3/AvailableCountries",
+                "get"
+            ],
+            "LongWeekendLongWeekend": [
+                "/api/v3/LongWeekend/{year}/{countryCode}",
+                "get"
+            ],
+            "PublicHolidayPublicHolidaysV3": [
+                "/api/v3/PublicHolidays/{year}/{countryCode}",
+                "get"
+            ],
+            "PublicHolidayIsTodayPublicHoliday": [
+                "/api/v3/IsTodayPublicHoliday/{countryCode}",
+                "get"
+            ],
+            "PublicHolidayNextPublicHolidays": [
+                "/api/v3/NextPublicHolidays/{countryCode}",
+                "get"
+            ],
+            "PublicHolidayNextPublicHolidaysWorldwide": [
+                "/api/v3/NextPublicHolidaysWorldwide",
+                "get"
+            ],
+            "VersionGetVersion": [
+                "/api/v3/Version",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "Can you check if today is a public holiday in China?",
+            "Get the country info for China.",
+            "Get the list of all available countries for public holiday information.",
+            "I want to know the version of the Nager.Date library being used. Can you fetch that for me?",
+            "I need to find out if there are any long weekends in the United States in 2024. Can you help me with that?",
+            "Find out the next public holidays for the Great Britain.",
+            "I'm curious about the public holidays in Australia in 2023. Can you fetch the list for me?",
+            "Get the upcoming public holidays worldwide for the next 7 days.",
+            "I'm planning a trip to Japan next year. Can you find out if there are any long weekends in Japan in 2023? It would be great to align my trip with a long weekend.",
+            "I'm curious about the public holidays in different countries. Could you show me the public holidays for the next week worldwide?",
+            "I'm working on a project about different countries. Can you provide me with information about France, such as its official name, region, and neighboring countries?",
+            "I'm interested in knowing the upcoming public holidays in Germany for the next year. Could you fetch that information for me?",
+            "I'm creating a calendar for my international team. Can you help me find the public holidays in the USA for 2023?",
+            "I'm planning a road trip across Europe. Can you provide me with information about Italy, including its common name, official name, and the countries it shares borders with?",
+            "Can you help me plan my next vacation by checking the public holidays in Japan and Germany for the next year? I want to make sure I don't miss any important dates.",
+            "Hey, I'm curious about the holidays in different countries. Can you compare the number of public holidays in Canada, and Mexico for 2023?",
+            "I'm planning a surprise visit to my friend in Germany. I need to know when the next long weekend of the year 2023 is coming up, so I can plan my trip."
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "PublicHolidayIsTodayPublicHoliday",
+                    "Action_Input": "{\"countryCode\": \"CN\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "CountryCountryInfo",
+                    "Action_Input": "{\"countryCode\": \"CN\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "CountryAvailableCountries",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "VersionGetVersion",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "LongWeekendLongWeekend",
+                    "Action_Input": "{\"year\": 2024, \"countryCode\": \"US\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayNextPublicHolidays",
+                    "Action_Input": "{\"countryCode\": \"GB\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayPublicHolidaysV3",
+                    "Action_Input": "{\"year\": 2023, \"countryCode\": \"AU\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayNextPublicHolidaysWorldwide",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "LongWeekendLongWeekend",
+                    "Action_Input": "{\"year\": 2023, \"countryCode\": \"JP\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayNextPublicHolidaysWorldwide",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "CountryCountryInfo",
+                    "Action_Input": "{\"countryCode\": \"FR\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayNextPublicHolidays",
+                    "Action_Input": "{\"countryCode\": \"DE\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayPublicHolidaysV3",
+                    "Action_Input": "{\"year\": 2023, \"countryCode\": \"US\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "CountryCountryInfo",
+                    "Action_Input": "{\"countryCode\": \"IT\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayNextPublicHolidays",
+                    "Action_Input": "{\"countryCode\": \"JP\"}"
+                },
+                {
+                    "Action": "PublicHolidayNextPublicHolidays",
+                    "Action_Input": "{\"countryCode\": \"DE\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "PublicHolidayPublicHolidaysV3",
+                    "Action_Input": "{\"year\": 2023, \"countryCode\": \"CA\"}"
+                },
+                {
+                    "Action": "PublicHolidayPublicHolidaysV3",
+                    "Action_Input": "{\"year\": 2023, \"countryCode\": \"MX\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "LongWeekendLongWeekend",
+                    "Action_Input": "{\"year\": 2023, \"countryCode\": \"DE\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "airportsapi",
+        "Description": "Get name and website-URL for airports by ICAO code",
+        "Category": "Transportation",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{\"openapi\": \"3.0.1\", \"info\": {\"title\": \"airportsapi\", \"description\": \"Get name and website-URL for airports by ICAO code. Covered airports are mostly in Germany.\", \"version\": \"v1\"}, \"servers\": [{\"url\": \"https://airport-web.appspot.com/_ah/api\"}], \"paths\": {\"/airportsapi/v1/airports/{icao_code}\": {\"get\": {\"operationId\": \"AirportApi_getAirport\", \"parameters\": [{\"name\": \"icao_code\", \"description\": \"The ICAO code of the target airport located in Germany\", \"in\": \"path\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"A successful response\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/ApiEndpointsAirportResponse\"}}}}}}}}, \"components\": {\"schemas\": {\"ApiEndpointsAirportResponse\": {\"type\": \"object\", \"properties\": {\"ICAO\": {\"type\": \"string\"}, \"last_update\": {\"type\": \"string\"}, \"name\": {\"type\": \"string\"}, \"url\": {\"type\": \"string\"}}}}, \"securitySchemes\": {\"google_id_token\": {\"type\": \"oauth2\", \"flows\": {\"implicit\": {\"authorizationUrl\": \"\", \"scopes\": {}}}, \"x-google-issuer\": \"accounts.google.com\", \"x-google-jwks_uri\": \"https://www.googleapis.com/oauth2/v1/certs\"}}}}",
+        "NLDocumentation": "AirportApi_getAirport: \nParameters: {\"icao_code\": \"Required. string. The ICAO code of the target airport located in Germany.\"}\nOutput: A successful response.\n - Format: application/json\n - Structure: #ApiEndpointsAirportResponse\n\nThe detailed output format for the tools is outlined below:\n#ApiEndpointsAirportResponse: Object{ICAO, last_update, name, url}\n",
+        "Function_Description": {
+            "AirportApi_getAirport": "Parameters: {\"icao_code\": \"Required. string. The ICAO code of the target airport located in Germany.\"}\nOutput: A successful response.\n - Format: application/json\n - Structure: #ApiEndpointsAirportResponse",
+            "components": "The detailed output format for the tools is outlined below:\n#ApiEndpointsAirportResponse: Object{ICAO, last_update, name, url}"
+        },
+        "Function_Projection": {
+            "AirportApi_getAirport": [
+                "/airportsapi/v1/airports/{icao_code}",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "Can you find the website URL for the airport with the ICAO code \"EDDF\" in Germany?",
+            "Please retrieve the name and last update date for the airport with the ICAO code \"EDDM\" in Germany.",
+            "Get the ICAO code and website URL for the airport named \"Frankfurt Airport\" in Germany.",
+            "I need the last update date and name of the airport with the ICAO code \"EDDB\" in Germany.",
+            "Could you fetch the website URL and ICAO code for the airport called \"Munich Airport\" in Germany?",
+            "Retrieve the name and website URL for the airport with the ICAO code \"EDDH\" and \"EDDF\" in Germany.",
+            "I'm planning a trip to Germany and I want to know more about the airport I'll be landing at. Can you find the name and website of the airport with the ICAO code 'EDDF'?",
+            "I'm doing a research on German airports. Could you provide me the name and website of the airport that has the ICAO code 'EDDM'?"
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDF\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDM\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDF\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDB\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDM\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDH\"}"
+                },
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDF\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDF\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "AirportApi_getAirport",
+                    "Action_Input": "{\"icao_code\": \"EDDM\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "AviationAPI",
+        "Description": "FAA Aeronautical Charts and Publications, Airport Information, and Airport Weather",
+        "Category": "Transportation",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{\"openapi\": \"3.0.1\", \"info\": {\"title\": \"AviationAPI API\", \"description\": \"AviationAPI was created for the use on VATSIM, but can be used for any web application. Enjoy!\", \"contact\": {\"name\": \"Ian Cowan\", \"url\": \"https://www.aviationapi.com\"}, \"version\": \"1.0\", \"x-logo\": {\"url\": \"https://www.aviationapi.com/photos/aviationapi_logo.png\"}}, \"servers\": [{\"url\": \"https://api.aviationapi.com/v1\"}], \"tags\": [{\"name\": \"charts\", \"description\": \"Get charts and chart changes with different sorting and searching options, automatically updated every 28 days\"}, {\"name\": \"airports\", \"description\": \"Get airport data, automatically updated daily\"}, {\"name\": \"preferred routes\", \"description\": \"Get FAA preferred routes, automatically updated daily\"}, {\"name\": \"weather\", \"description\": \"Get weather information (METAR/TAF) for any airport in the world, automatically updates on request\"}, {\"name\": \"VATSIM\", \"description\": \"Get VATSIM pilot and controller connections, automatically updated every two minutes\"}], \"paths\": {\"/airports\": {\"get\": {\"tags\": [\"airports\"], \"summary\": \"Get an airport by its ICAO or FAA identifier\", \"description\": \"Search for an airport by its ICAO or FAA identifier\", \"parameters\": [{\"name\": \"apt\", \"in\": \"query\", \"description\": \"FAA or ICAO facility identifier (KAVL or AVL). Separate multiple entries with a comma\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"site_number\": {\"type\": \"string\", \"description\": \"FAA unique airport site number\"}, \"type\": {\"type\": \"string\", \"description\": \"Type of facility (AIRPORT/HELIPORT)\"}, \"facility_name\": {\"type\": \"string\", \"description\": \"Name of the facility\"}, \"faa_ident\": {\"type\": \"string\", \"description\": \"FAA identifier\"}, \"icao_ident\": {\"type\": \"string\", \"description\": \"ICAO identifier\"}, \"district_office\": {\"type\": \"string\", \"description\": \"FSDO of jurisdiction\"}, \"state\": {\"type\": \"string\", \"description\": \"Two letter abbreviation of the state the facility resides in\"}, \"state_full\": {\"type\": \"string\", \"description\": \"Full name of the state the facility resides in\"}, \"county\": {\"type\": \"string\", \"description\": \"Name of the county the facility resides in\"}, \"city\": {\"type\": \"string\", \"description\": \"Name of the city the facility resides in\"}, \"ownership\": {\"type\": \"string\", \"description\": \"Facility ownership, PU -> Public, PR -> Private\"}, \"use\": {\"type\": \"string\", \"description\": \"Facility use, PU -> Public, PR -> Private\"}, \"manager\": {\"type\": \"string\", \"description\": \"Name of the facility's manager\"}, \"manager_phone\": {\"type\": \"string\", \"description\": \"Phone number of the facility's manager\"}, \"latitude\": {\"type\": \"string\", \"description\": \"Latitude of the facility\"}, \"latitude_sec\": {\"type\": \"string\", \"description\": \"Latitude in seconds of the facility\"}, \"longitude\": {\"type\": \"string\", \"description\": \"Longitude of the facility\"}, \"longitude_sec\": {\"type\": \"string\", \"description\": \"Longitude in seconds of the facility\"}, \"elevation\": {\"type\": \"string\", \"description\": \"Elevation of the facility\"}, \"magnetic_variation\": {\"type\": \"string\", \"description\": \"Magnetic variation at the facility\"}, \"tpa\": {\"type\": \"string\", \"description\": \"Traffic pattern altitude, Blank -> Standard\"}, \"vfr_sectional\": {\"type\": \"string\", \"description\": \"Name of the VFR sectional the facility lies on\"}, \"boundary_artcc\": {\"type\": \"string\", \"description\": \"ARTCC that bounds the facility\"}, \"boundary_artcc_name\": {\"type\": \"string\", \"description\": \"Name of the ARTCC that bounds the facility\"}, \"responsible_artcc\": {\"type\": \"string\", \"description\": \"ARTCC that is responsible for the facility, Blank -> Same as boundary\"}, \"responsible_artcc_name\": {\"type\": \"string\", \"description\": \"Name of the ARTCC that is responsible for the facility, Blank -> Same as boundary\"}, \"fss_phone_number\": {\"type\": \"string\", \"description\": \"Local flight service station phone number\"}, \"fss_phone_numer_tollfree\": {\"type\": \"string\", \"description\": \"Tollfree flight service station phone number\"}, \"notam_facility_ident\": {\"type\": \"string\", \"description\": \"Facility identifier for the NOTAM database\"}, \"status\": {\"type\": \"string\", \"description\": \"Facility status, O -> Open, C -> Closed\"}, \"certification_typedate\": {\"type\": \"string\", \"description\": \"Type and date of the facility's certification\"}, \"customs_airport_of_entry\": {\"type\": \"string\", \"description\": \"Customs airport of entry, Y -> Yes, N -> No\"}, \"military_joint_use\": {\"type\": \"string\", \"description\": \"Military join use of facility, Y -> Yes, N -> No\"}, \"military_landing\": {\"type\": \"string\", \"description\": \"Military authorized for landing at facility, Y -> Yes, N -> No\"}, \"lighting_schedule\": {\"type\": \"string\", \"description\": \"Lighting schedule at the facility, if applicable\"}, \"beacon_schedule\": {\"type\": \"string\", \"description\": \"Beacon schedule at the facility\"}, \"control_tower\": {\"type\": \"string\", \"description\": \"Control tower present at the facility, Y -> Yes, N -> No\"}, \"unicom\": {\"type\": \"string\", \"description\": \"Facility UNICOM frequency\"}, \"ctaf\": {\"type\": \"string\", \"description\": \"Facility CTAF\"}, \"effective_date\": {\"type\": \"string\", \"description\": \"Effective date of this data\"}}}}}}, \"404\": {\"description\": \"No airport found in search\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}, \"example\": {\"status\": \"error\", \"status_code\": \"404\", \"message\": \"You must search by at least one parameter\"}}}}}}}, \"/charts\": {\"get\": {\"tags\": [\"charts\"], \"summary\": \"Get charts for a specified airport\", \"description\": \"Search for charts by ICAO or FAA identifier with optional grouping\", \"parameters\": [{\"name\": \"apt\", \"in\": \"query\", \"description\": \"FAA or ICAO airport identifier (KAVL or AVL). Separate multiple entries with a comma\", \"required\": true, \"schema\": {\"type\": \"string\"}}, {\"name\": \"group\", \"in\": \"query\", \"description\": \"Optional grouping of the charts. 1 -> General, Departures, Arrivals, Approaches; 2 -> Airport Diagram only; 3 -> General only; 4 -> Departures only; 5 -> Arrivals only; 6 -> Approaches only; 7 -> Everything but General\", \"schema\": {\"type\": \"integer\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"state\": {\"type\": \"string\", \"description\": \"Two letter abbreviation of the state the facility resides in\"}, \"state_full\": {\"type\": \"string\", \"description\": \"Full name of the state the facility resides in\"}, \"city\": {\"type\": \"string\", \"description\": \"Name of the city the facility resides in\"}, \"airport_name\": {\"type\": \"string\", \"description\": \"Name of the facility\"}, \"military\": {\"type\": \"string\", \"description\": \"Military chart, Y -> Yes, N -> No\"}, \"faa_ident\": {\"type\": \"string\", \"description\": \"Facility FAA identifier\"}, \"icao_ident\": {\"type\": \"string\", \"description\": \"Facility ICAO identifier\"}, \"chart_seq\": {\"type\": \"string\", \"description\": \"Chart sequence number\"}, \"chart_code\": {\"type\": \"string\", \"description\": \"Code for the chart type\"}, \"chart_name\": {\"type\": \"string\", \"description\": \"Name of the chart\"}, \"pdf_name\": {\"type\": \"string\", \"description\": \"Name of the chart PDF\"}, \"pdf_path\": {\"type\": \"string\", \"description\": \"URL to the chart PDF\"}}}}}}, \"403\": {\"description\": \"Invalid group code\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}, \"404\": {\"description\": \"No airport specified\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}, \"/charts/changes\": {\"get\": {\"tags\": [\"charts\"], \"summary\": \"Get chart changes by airport or chart name\", \"description\": \"Search for charts by ICAO or FAA identifier or chart name\", \"parameters\": [{\"name\": \"apt\", \"in\": \"query\", \"description\": \"FAA or ICAO airport identifier (KAVL or AVL)\", \"required\": true, \"schema\": {\"type\": \"string\"}}, {\"name\": \"chart_name\", \"in\": \"query\", \"description\": \"Partial or full name of the chart/procedure\", \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"state\": {\"type\": \"string\", \"description\": \"Two letter abbreviation of the state the facility resides in\"}, \"state_full\": {\"type\": \"string\", \"description\": \"Full name of the state the facility resides in\"}, \"city\": {\"type\": \"string\", \"description\": \"Name of the city the facility resides in\"}, \"airport_name\": {\"type\": \"string\", \"description\": \"Name of the facility\"}, \"military\": {\"type\": \"string\", \"description\": \"Military chart, Y -> Yes, N -> No\"}, \"faa_ident\": {\"type\": \"string\", \"description\": \"Facility FAA identifier\"}, \"icao_ident\": {\"type\": \"string\", \"description\": \"Facility ICAO identifier\"}, \"chart_seq\": {\"type\": \"string\", \"description\": \"Chart sequence number\"}, \"chart_code\": {\"type\": \"string\", \"description\": \"Code for the chart type\"}, \"chart_name\": {\"type\": \"string\", \"description\": \"Name of the chart\"}, \"pdf_name\": {\"type\": \"string\", \"description\": \"Name of the chart comparison PDF\"}, \"pdf_path\": {\"type\": \"string\", \"description\": \"URL to the chart comparison PDF\"}}}}}}, \"404\": {\"description\": \"No airport specified\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}, \"/charts/afd\": {\"get\": {\"tags\": [\"charts\"], \"summary\": \"Get the AFD for a specified airport\", \"description\": \"Search for AFD by ICAO or FAA identifier\", \"parameters\": [{\"name\": \"apt\", \"in\": \"query\", \"description\": \"FAA or ICAO airport identifier (KCLT or CLT)\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"state\": {\"type\": \"string\", \"description\": \"Full name of the state the facility resides in\"}, \"city\": {\"type\": \"string\", \"description\": \"Name of the city the facility resides in\"}, \"airport_name\": {\"type\": \"string\", \"description\": \"Name of the facility\"}, \"icao_ident\": {\"type\": \"string\", \"description\": \"Facility ICAO identifier\"}, \"pdf_name\": {\"type\": \"string\", \"description\": \"Name of the AFD PDF\"}, \"pdf_path\": {\"type\": \"string\", \"description\": \"URL to the AFD PDF\"}}}}}}, \"404\": {\"description\": \"No airport specified\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}, \"/preferred-routes\": {\"get\": {\"tags\": [\"preferred routes\"], \"summary\": \"Get all of the preferred routes\", \"description\": \"Get all of the preferred routes with no search parameters\", \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"origin\": {\"type\": \"string\", \"description\": \"Originating airport of the route\"}, \"route\": {\"type\": \"string\", \"description\": \"Preferred route. May be partial or full\"}, \"destination\": {\"type\": \"string\", \"description\": \"Destination airport of the route\"}, \"hours1\": {\"type\": \"string\", \"description\": \"First group of active hours\"}, \"hours2\": {\"type\": \"string\", \"description\": \"Second group of active hours\"}, \"hours3\": {\"type\": \"string\", \"description\": \"Third group of active hours\"}, \"type\": {\"type\": \"string\", \"description\": \"Type of route, H -> High, L -> low, LSD -> Low Single Direction, HSD -> High Single Direction, SLD -> Special Low Altitude Directional, SHD -> Special High Altitude Directional, TEC -> Tower Enroute Control, Blank -> N/A\"}, \"area\": {\"type\": \"string\", \"description\": \"Area description\"}, \"altitude\": {\"type\": \"string\", \"description\": \"Altitude for use with the route\"}, \"aircraft\": {\"type\": \"string\", \"description\": \"Limitation on the type of aircraft that can fly the route\"}, \"flow\": {\"type\": \"string\", \"description\": \"Flow requirements for using the route\"}, \"seq\": {\"type\": \"integer\", \"description\": \"Sequence to use the route in\"}, \"d_artcc\": {\"type\": \"string\", \"description\": \"Originating airport ARTCC\"}, \"a_artcc\": {\"type\": \"string\", \"description\": \"Arrival airport ARTCC\"}}}}}}}}, \"/preferred-routes/search\": {\"get\": {\"tags\": [\"preferred routes\"], \"summary\": \"Get preferred routes based on search criteria\", \"description\": \"Search for preferred routes by various parameters. At least one search criteria is required, although a combination of any can be used\", \"parameters\": [{\"name\": \"origin\", \"in\": \"query\", \"description\": \"Originating airport FAA identifier\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"dest\", \"in\": \"query\", \"description\": \"Destination airport FAA identifier\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"type\", \"in\": \"query\", \"description\": \"Type of route, H -> High, L -> low, LSD -> Low Single Direction, HSD -> High Single Direction, SLD -> Special Low Altitude Directional, SHD -> Special High Altitude Directional, TEC -> Tower Enroute Control, Blank -> N/A\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"alt\", \"in\": \"query\", \"description\": \"Hard altitude for the route\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"lower_alt\", \"in\": \"query\", \"description\": \"Lower altitude limit\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"upper_alt\", \"in\": \"query\", \"description\": \"Upper altitude limit\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"aircraft\", \"in\": \"query\", \"description\": \"Type of aircraft for the route\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"d_artcc\", \"in\": \"query\", \"description\": \"Departure airport ARTCC three letter identifier\", \"schema\": {\"type\": \"string\"}}, {\"name\": \"a_artcc\", \"in\": \"query\", \"description\": \"Arrival airport ARTCC three letter identifier\", \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"origin\": {\"type\": \"string\", \"description\": \"Originating airport of the route\"}, \"route\": {\"type\": \"string\", \"description\": \"Preferred route. May be partial or full\"}, \"destination\": {\"type\": \"string\", \"description\": \"Destination airport of the route\"}, \"hours1\": {\"type\": \"string\", \"description\": \"First group of active hours\"}, \"hours2\": {\"type\": \"string\", \"description\": \"Second group of active hours\"}, \"hours3\": {\"type\": \"string\", \"description\": \"Third group of active hours\"}, \"type\": {\"type\": \"string\", \"description\": \"Type of route, H -> High, L -> low, LSD -> Low Single Direction, HSD -> High Single Direction, SLD -> Special Low Altitude Directional, SHD -> Special High Altitude Directional, TEC -> Tower Enroute Control, Blank -> N/A\"}, \"area\": {\"type\": \"string\", \"description\": \"Area description\"}, \"altitude\": {\"type\": \"string\", \"description\": \"Altitude for use with the route\"}, \"aircraft\": {\"type\": \"string\", \"description\": \"Limitation on the type of aircraft that can fly the route\"}, \"flow\": {\"type\": \"string\", \"description\": \"Flow requirements for using the route\"}, \"seq\": {\"type\": \"integer\", \"description\": \"Sequence to use the route in\"}, \"d_artcc\": {\"type\": \"string\", \"description\": \"Originating airport ARTCC\"}, \"a_artcc\": {\"type\": \"string\", \"description\": \"Arrival airport ARTCC\"}}}}}}, \"404\": {\"description\": \"No search parameter\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}, \"500\": {\"description\": \"ICAO identifier used\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}, \"/vatsim/pilots\": {\"get\": {\"tags\": [\"VATSIM\"], \"summary\": \"Get all the arrivals and/or departures into an airport on VATSIM\", \"description\": \"Search for all the arrivals and/or departures into an airport on VATSIM\", \"parameters\": [{\"name\": \"apt\", \"in\": \"query\", \"description\": \"FAA or ICAO airport identifier (KATL or ATL). Separate multiple entries with a comma\", \"required\": true, \"schema\": {\"type\": \"string\"}}, {\"name\": \"dep\", \"in\": \"query\", \"description\": \"Show only departures? 1 -> true\", \"schema\": {\"type\": \"integer\"}}, {\"name\": \"arr\", \"in\": \"query\", \"description\": \"Show only arrivals? 1 -> true\", \"schema\": {\"type\": \"integer\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"callsign\": {\"type\": \"string\", \"description\": \"Callsign of the aircraft\"}, \"cid\": {\"type\": \"integer\", \"description\": \"CID of the pilot\"}, \"name\": {\"type\": \"string\", \"description\": \"Name of the pilot and home base (if applicable)\"}, \"latitude\": {\"type\": \"string\", \"description\": \"Latitude of the aircraft\"}, \"longitutde\": {\"type\": \"string\", \"description\": \"Longitutde of the aircraft\"}, \"altitude\": {\"type\": \"string\", \"description\": \"Reported aircraft altitude, in feet\"}, \"ground_speed\": {\"type\": \"string\", \"description\": \"Reported aircraft ground speed, in knots\"}, \"heading\": {\"type\": \"integer\", \"description\": \"Reported aircraft heading\"}, \"transponder\": {\"type\": \"integer\", \"description\": \"Aircraft's transponder code\"}, \"aircraft\": {\"type\": \"string\", \"description\": \"Aircraft's aircraft type and equipment code (if applicable)\"}, \"departure\": {\"type\": \"string\", \"description\": \"Departure airport identifier\"}, \"nm_from_dep\": {\"type\": \"string\", \"description\": \"Distance from departure airport, in NM\"}, \"arrival\": {\"type\": \"string\", \"description\": \"Arrival airport identifier\"}, \"nm_from_arr\": {\"type\": \"string\", \"description\": \"Distance from arrival airport, in NM\"}, \"alternate\": {\"type\": \"string\", \"description\": \"Alternate airport identifier, if applicable\"}, \"route\": {\"type\": \"string\", \"description\": \"Aircraft's route of flight\"}, \"flight_rules\": {\"type\": \"string\", \"description\": \"Flight rules, VFR -> Visual Flight Rules, IFR -> Instrument Flight Rules\"}, \"filed_altitude\": {\"type\": \"string\", \"description\": \"Planned altitude of flight\"}, \"filed_tas\": {\"type\": \"string\", \"description\": \"Filed cruise true airspeed\"}, \"filed_time_enroute\": {\"type\": \"string\", \"description\": \"Estimated filed time enroute\"}, \"filed_fuel_onboard\": {\"type\": \"string\", \"description\": \"Estimated filed maximum cruise time for fuel onboard\"}, \"remarks\": {\"type\": \"string\", \"description\": \"Flightplan remarks\"}, \"stage_of_flight\": {\"type\": \"string\", \"description\": \"Estimated current stage of flight\"}}}}}}, \"404\": {\"description\": \"No airport specified\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}, \"/vatsim/controllers\": {\"get\": {\"tags\": [\"VATSIM\"], \"summary\": \"Get all the controllers at a specified facility on VATSIM\", \"description\": \"Search for all the at a specified facility on VATSIM\", \"parameters\": [{\"name\": \"fac\", \"in\": \"query\", \"description\": \"Airport facility identifier. This should be what is used in the callsign on VATSIM (CLT). Separate multiple entries with a comma\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"callsign\": {\"type\": \"string\", \"description\": \"Controller callsign\"}, \"cid\": {\"type\": \"integer\", \"description\": \"CID of the controller\"}, \"name\": {\"type\": \"string\", \"description\": \"Name of the controller\"}, \"frequency\": {\"type\": \"string\", \"description\": \"Frequency the controller is transmitting and receiving on\"}, \"atis\": {\"type\": \"string\", \"description\": \"Controller ATIS\"}, \"time_online\": {\"type\": \"string\", \"description\": \"Amount of time the controller has been logged on in hours, minutes, and seconds\"}}}}}}, \"404\": {\"description\": \"No facility specified\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}, \"/weather/metar\": {\"get\": {\"tags\": [\"weather\"], \"summary\": \"Get the METAR for a specified airport\", \"description\": \"Search for an airport's METAR\", \"parameters\": [{\"name\": \"apt\", \"in\": \"query\", \"description\": \"ICAO airport identifier (KAVL). Separate multiple entries with a comma\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"station_id\": {\"type\": \"string\", \"description\": \"ICAO identifier of the reporting station\"}, \"raw\": {\"type\": \"string\", \"description\": \"Raw, uninterpreted METAR\"}, \"temp\": {\"type\": \"string\", \"description\": \"Temperature, in degrees celsius\"}, \"dewpoint\": {\"type\": \"string\", \"description\": \"Dewpoint, in degrees celsius\"}, \"wind\": {\"type\": \"string\", \"description\": \"Wind direction, in degrees\"}, \"wind_vel\": {\"type\": \"string\", \"description\": \"Wind velocity, in knots\"}, \"visibility\": {\"type\": \"string\", \"description\": \"Visibility, in statue miles\"}, \"alt_hg\": {\"type\": \"string\", \"description\": \"Altimeter setting (atmospheric pressure), in inches of mercury\"}, \"alt_mb\": {\"type\": \"string\", \"description\": \"Altimeter setting (atmospheric pressure), in millibars, if applicable\"}, \"wx\": {\"type\": \"string\", \"description\": \"Weather string abbreviations, if applicable\"}, \"auto_report\": {\"type\": \"boolean\", \"description\": \"Automatic report?\"}, \"sky_conditions\": {\"type\": \"array\", \"description\": \"List of all the applicable cloud types and bases. Clear skys will be reported with no bases\", \"items\": {\"type\": \"object\", \"properties\": {\"coverage\": {\"type\": \"string\", \"description\": \"Sky coverage code\"}, \"base_agl\": {\"type\": \"string\", \"description\": \"Altitude in AGL of the cloud bases, null if skies clear\"}}}}, \"category\": {\"type\": \"string\", \"description\": \"Current flight category classification, VFR -> VFR, MVFR -> Marginal VFR, IFR -> IFR, LIFR -> Low IFR\"}, \"report_type\": {\"type\": \"string\", \"description\": \"Type of report, METAR -> Routine hourly report, SPECI -> Special report\"}}}}}}, \"403\": {\"description\": \"No airport found in the search\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}, \"404\": {\"description\": \"No METAR found for the specified airport\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}, \"/weather/taf\": {\"get\": {\"tags\": [\"weather\"], \"summary\": \"Get the TAF for a specified airport\", \"description\": \"Search for an airport's TAF\", \"parameters\": [{\"name\": \"apt\", \"in\": \"query\", \"description\": \"ICAO airport identifier (KAVL). Separate multiple entries with a comma\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"OK\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"station_id\": {\"type\": \"string\", \"description\": \"ICAO identifier of the reporting station\"}, \"raw\": {\"type\": \"string\", \"description\": \"Raw, uninterpreted TAF\"}, \"line_by_line\": {\"type\": \"array\", \"description\": \"TAF split into each line of the report\", \"items\": {\"type\": \"object\", \"properties\": {\"1\": {\"type\": \"string\", \"description\": \"Line 1\"}, \"2\": {\"type\": \"string\", \"description\": \"Line 2\"}}}}}}}}}, \"403\": {\"description\": \"No airport found in the search\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}, \"404\": {\"description\": \"No TAF found for the specified airport\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/error\"}}}}}}}}, \"components\": {\"schemas\": {\"error\": {\"type\": \"object\", \"properties\": {\"status\": {\"type\": \"string\"}, \"status_code\": {\"type\": \"integer\"}, \"message\": {\"type\": \"string\"}}}, \"OK\": {\"type\": \"object\", \"properties\": {\"status\": {\"type\": \"string\"}}}, \"OKID\": {\"type\": \"object\", \"properties\": {\"status\": {\"type\": \"string\"}, \"id\": {\"type\": \"integer\"}}}}}}}",
+        "NLDocumentation": "airports_get: Get an airport by its ICAO or FAA identifier\nParameters: {\"apt\": \"Required. string. FAA or ICAO facility identifier (KAVL or AVL). Separate multiple entries with a comma.\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{site_number, type, facility_name, faa_ident, icao_ident, district_office, state, state_full, county, city, ownership, use, manager, manager_phone, latitude, latitude_sec, longitude, longitude_sec, elevation, magnetic_variation, tpa, vfr_sectional, boundary_artcc, boundary_artcc_name, responsible_artcc, responsible_artcc_name, fss_phone_number, fss_phone_numer_tollfree, notam_facility_ident, status, certification_typedate, customs_airport_of_entry, military_joint_use, military_landing, lighting_schedule, beacon_schedule, control_tower, unicom, ctaf, effective_date}\ncharts_get: Get charts for a specified airport\nParameters: {\"apt\": \"Required. string. FAA or ICAO airport identifier (KAVL or AVL). Separate multiple entries with a comma.\", \"group\": \"integer. Optional grouping of the charts. 1 -> General, Departures, Arrivals, Approaches; 2 -> Airport Diagram only; 3 -> General only; 4 -> Departures only; 5 -> Arrivals only; 6 -> Approaches only; 7 -> Everything but General.\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{state, state_full, city, airport_name, military, faa_ident, icao_ident, chart_seq, chart_code, chart_name, pdf_name, pdf_path}\ncharts_changes_get: Get chart changes by airport or chart name\nParameters: {\"apt\": \"Required. string. FAA or ICAO airport identifier (KAVL or AVL).\", \"chart_name\": \"string. Partial or full name of the chart/procedure.\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{state, state_full, city, airport_name, military, faa_ident, icao_ident, chart_seq, chart_code, chart_name, pdf_name, pdf_path}\ncharts_afd_get: Get the AFD for a specified airport\nParameters: {\"apt\": \"Required. string. FAA or ICAO airport identifier (KCLT or CLT).\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{state, city, airport_name, icao_ident, pdf_name, pdf_path}\npreferred-routes_get: Get all of the preferred routes\nParameters: {}\nOutput: OK.\n - Format: application/json\n - Structure: Object{origin, route, destination, hours1, hours2, hours3, type, area, altitude, aircraft, flow, seq, d_artcc, a_artcc}\n",
+        "Function_Description": {
+            "airports_get": "Get an airport by its ICAO or FAA identifier\nParameters: {\"apt\": \"Required. string. FAA or ICAO facility identifier (KAVL or AVL). Separate multiple entries with a comma.\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{site_number, type, facility_name, faa_ident, icao_ident, district_office, state, state_full, county, city, ownership, use, manager, manager_phone, latitude, latitude_sec, longitude, longitude_sec, elevation, magnetic_variation, tpa, vfr_sectional, boundary_artcc, boundary_artcc_name, responsible_artcc, responsible_artcc_name, fss_phone_number, fss_phone_numer_tollfree, notam_facility_ident, status, certification_typedate, customs_airport_of_entry, military_joint_use, military_landing, lighting_schedule, beacon_schedule, control_tower, unicom, ctaf, effective_date}",
+            "charts_get": "Get charts for a specified airport\nParameters: {\"apt\": \"Required. string. FAA or ICAO airport identifier (KAVL or AVL). Separate multiple entries with a comma.\", \"group\": \"integer. Optional grouping of the charts. 1 -> General, Departures, Arrivals, Approaches; 2 -> Airport Diagram only; 3 -> General only; 4 -> Departures only; 5 -> Arrivals only; 6 -> Approaches only; 7 -> Everything but General.\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{state, state_full, city, airport_name, military, faa_ident, icao_ident, chart_seq, chart_code, chart_name, pdf_name, pdf_path}",
+            "charts_changes_get": "Get chart changes by airport or chart name\nParameters: {\"apt\": \"Required. string. FAA or ICAO airport identifier (KAVL or AVL).\", \"chart_name\": \"string. Partial or full name of the chart/procedure.\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{state, state_full, city, airport_name, military, faa_ident, icao_ident, chart_seq, chart_code, chart_name, pdf_name, pdf_path}",
+            "charts_afd_get": "Get the AFD for a specified airport\nParameters: {\"apt\": \"Required. string. FAA or ICAO airport identifier (KCLT or CLT).\"}\nOutput: OK.\n - Format: application/json\n - Structure: Object{state, city, airport_name, icao_ident, pdf_name, pdf_path}",
+            "preferred-routes_get": "Get all of the preferred routes\nParameters: {}\nOutput: OK.\n - Format: application/json\n - Structure: Object{origin, route, destination, hours1, hours2, hours3, type, area, altitude, aircraft, flow, seq, d_artcc, a_artcc}",
+            "components": ""
+        },
+        "Function_Projection": {
+            "airports_get": [
+                "/airports",
+                "get"
+            ],
+            "charts_get": [
+                "/charts",
+                "get"
+            ],
+            "charts_changes_get": [
+                "/charts/changes",
+                "get"
+            ],
+            "charts_afd_get": [
+                "/charts/afd",
+                "get"
+            ],
+            "preferred-routes_get": [
+                "/preferred-routes",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "I'm planning a trip to Asheville, North Carolina and I'd like to know more about the Asheville Regional Airport. Can you find the details for me using its FAA identifier, AVL?",
+            "I'm preparing for a flight to Asheville Regional Airport (ICAO: AVL). Can you get me the aeronautical charts for this airport? I would like to see the general, departures, arrivals, and approaches charts specifically.",
+            "I've heard that there have been some changes to the charts for Asheville Regional Airport (ICAO: AVL). Can you check if there are any updates to the 'Arrivals' chart?",
+            "I'm a bit nervous about my upcoming flight. Can you find the Airport Facility Directory (AFD) for Asheville Regional Airport (ICAO: AVL) to help me familiarize myself with the airport layout?",
+            "I'm curious about the preferred routes for flights. Can you find all of the preferred routes for me?",
+            "I'm planning a flight from Nantucket Memorial Airport (ICAO: ACK) to Erie International Airport (ICAO: ERI). Can you find the preferred routes for this journey? I'll be flying at a low altitude.",
+            "I'm interested in the live air traffic at Hartsfield-Jackson Atlanta International Airport (ICAO: KATL). Can you find the arrivals and departures at this airport on VATSIM?",
+            "I'd like to know who's controlling the airspace around Shez Ansari (fac: CHI) on VATSIM. Can you find the controllers at this facility for me?",
+            "I'm worried about the weather for my flight to Asheville. Can you get the METAR weather report for Asheville Regional Airport (ICAO: KAVL)?",
+            "I need to plan for the weather during my entire stay in Asheville. Can you get the Terminal Aerodrome Forecast (TAF) for Asheville Regional Airport (ICAO: KAVL)?",
+            "I'm planning a trip to Chicago next week. Can you check the weather conditions at O'Hare International Airport (ICAO: ORD) for me? Also, I'd like to know the runway length and the type of surface of the longest runway there.",
+            "I'm studying for my pilot's license and need some help. Could you fetch me the aeronautical chart for Los Angeles International Airport (ICAO: KLAX)? Also, please provide me with the airport's elevation and the type of fuel available there.",
+            "I'm a travel blogger and I'm writing about the airports in New York. Can you provide me with the airport information for John F. Kennedy International Airport (ICAO: KJFK) and LaGuardia Airport (ICAO: KLGA)?"
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "airports_get",
+                    "Action_Input": "{\"apt\": \"AVL\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "charts_get",
+                    "Action_Input": "{\"apt\": \"AVL\", \"group\": 1}"
+                }
+            ],
+            [
+                {
+                    "Action": "charts_changes_get",
+                    "Action_Input": "{\"apt\": \"AVL\", \"chart_name\": \"Arriivals\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "charts_afd_get",
+                    "Action_Input": "{\"apt\": \"AVL\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "preferred-routes_get",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "preferred-routes_search_get",
+                    "Action_Input": "{\"origin\": \"ACK\", \"dest\": \"ERI\", \"type\": \"L\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "vatsim_pilots_get",
+                    "Action_Input": "{\"apt\": \"KATL\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "vatsim_controllers_get",
+                    "Action_Input": "{\"fac\": \"CHI\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "weather_metar_get",
+                    "Action_Input": "{\"apt\": \"KAVL\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "weather_taf_get",
+                    "Action_Input": "{\"apt\": \"KAVL\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "weather_metar_get",
+                    "Action_Input": "{\"apt\": \"ORD\"}"
+                },
+                {
+                    "Action": "airports_get",
+                    "Action_Input": "{\"apt\": \"ORD\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "charts_get",
+                    "Action_Input": "{\"apt\": \"KLAX\"}"
+                },
+                {
+                    "Action": "airports_get",
+                    "Action_Input": "{\"apt\": \"KLAX\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "airports_get",
+                    "Action_Input": "{\"apt\": \"KJFK\"}"
+                },
+                {
+                    "Action": "airports_get",
+                    "Action_Input": "{\"apt\": \"KLGA\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "chucknorris.io",
+        "Description": "JSON API for hand curated Chuck Norris jokes",
+        "Category": "Entertainment",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{ \"openapi\": \"3.0.3\", \"info\": { \"title\": \"Chuck Norris Jokes API\", \"version\": \"1.0.0\", \"description\": \"Chuck Norris Jokes API allows you to retrieve Chuck Norris jokes in various ways.\" }, \"servers\": [{\"url\": \"https://api.chucknorris.io\"}], \"paths\": { \"/jokes/random\": { \"get\": { \"summary\": \"Retrieve a random Chuck Norris joke\", \"description\": \"Retrieve a random Chuck Norris joke in JSON format.\", \"responses\": { \"200\": { \"description\": \"Successful response\", \"content\": { \"application/json\": { \"schema\": { \"type\": \"object\", \"properties\": { \"icon_url\": { \"type\": \"string\", \"description\": \"The URL of the icon associated with the Chuck Norris joke.\" }, \"id\": { \"type\": \"string\", \"description\": \"The unique ID of the Chuck Norris joke.\" }, \"url\": { \"type\": \"string\", \"description\": \"The URL of the joke on the Chuck Norris API website.\" }, \"value\": { \"type\": \"string\", \"description\": \"The text of the Chuck Norris joke.\" } } } } } } } } }, \"/jokes/random/{category}\": { \"get\": { \"summary\": \"Retrieve a random Chuck Norris joke by category\", \"description\": \"Retrieve a random Chuck Norris joke from a given category in JSON format.\", \"parameters\": [ { \"name\": \"category\", \"in\": \"path\", \"description\": \"The category from which to fetch the random joke.\", \"required\": false, \"schema\": { \"type\": \"string\" } } ], \"responses\": { \"200\": { \"description\": \"Successful response\", \"content\": { \"application/json\": { \"schema\": { \"type\": \"object\", \"properties\": { \"icon_url\": { \"type\": \"string\", \"description\": \"The URL of the icon associated with the Chuck Norris joke.\" }, \"id\": { \"type\": \"string\", \"description\": \"The unique ID of the Chuck Norris joke.\" }, \"url\": { \"type\": \"string\", \"description\": \"The URL of the joke on the Chuck Norris API website.\" }, \"value\": { \"type\": \"string\", \"description\": \"The text of the Chuck Norris joke.\" } } } } } } } } }, \"/jokes/categories\": { \"get\": { \"summary\": \"Retrieve a list of available categories\", \"description\": \"Retrieve a list of available categories for Chuck Norris jokes.\", \"responses\": { \"200\": { \"description\": \"Successful response\", \"content\": { \"application/json\": { \"schema\": { \"type\": \"array\", \"items\": { \"type\": \"string\", \"description\": \"A string representing a category for Chuck Norris jokes.\" } } } } } } } }, \"/jokes/search\": { \"get\": { \"summary\": \"Free text search for Chuck Norris jokes\", \"description\": \"Perform a free text search for Chuck Norris jokes in JSON format.\", \"parameters\": [ { \"name\": \"query\", \"in\": \"query\", \"description\": \"The search query for filtering jokes.\", \"required\": true, \"schema\": { \"type\": \"string\" } } ], \"responses\": { \"200\": { \"description\": \"Successful response\", \"content\": { \"application/json\": { \"schema\": { \"type\": \"object\", \"properties\": { \"total\": { \"type\": \"integer\", \"description\": \"The total number of Chuck Norris jokes matching the search query.\" }, \"result\": { \"type\": \"array\", \"items\": { \"type\": \"object\", \"properties\": { \"icon_url\": { \"type\": \"string\", \"description\": \"The URL of the icon associated with the Chuck Norris joke.\" }, \"id\": { \"type\": \"string\", \"description\": \"The unique ID of the Chuck Norris joke.\" }, \"url\": { \"type\": \"string\", \"description\": \"The URL of the joke on the Chuck Norris API website.\" }, \"value\": { \"type\": \"string\", \"description\": \"The text of the Chuck Norris joke.\" } } } } } } } } } } } } } }",
+        "NLDocumentation": "jokes_random_get: Retrieve a random Chuck Norris joke\nParameters: {}\nOutput: Successful response.\n - Format: application/json\n - Structure: Object{icon_url, id, url, value}\njokes_random_category_get: Retrieve a random Chuck Norris joke by category\nParameters: {\"category\": \"string. The category from which to fetch the random joke.\"}\nOutput: Successful response.\n - Format: application/json\n - Structure: Object{icon_url, id, url, value}\njokes_categories_get: Retrieve a list of available categories\nParameters: {}\nOutput: Successful response.\n - Format: application/json\n - Structure: Array[string]\njokes_search_get: Free text search for Chuck Norris jokes\nParameters: {\"query\": \"Required. string. The search query for filtering jokes.\"}\nOutput: Successful response.\n - Format: application/json\n - Structure: Object{total, result: Array[Object{icon_url, id, url, value}]}\n",
+        "Function_Description": {
+            "jokes_random_get": "Retrieve a random Chuck Norris joke\nParameters: {}\nOutput: Successful response.\n - Format: application/json\n - Structure: Object{icon_url, id, url, value}",
+            "jokes_random_category_get": "Retrieve a random Chuck Norris joke by category\nParameters: {\"category\": \"string. The category from which to fetch the random joke.\"}\nOutput: Successful response.\n - Format: application/json\n - Structure: Object{icon_url, id, url, value}",
+            "jokes_categories_get": "Retrieve a list of available categories\nParameters: {}\nOutput: Successful response.\n - Format: application/json\n - Structure: Array[string]",
+            "jokes_search_get": "Free text search for Chuck Norris jokes\nParameters: {\"query\": \"Required. string. The search query for filtering jokes.\"}\nOutput: Successful response.\n - Format: application/json\n - Structure: Object{total, result: Array[Object{icon_url, id, url, value}]}",
+            "components": ""
+        },
+        "Function_Projection": {
+            "jokes_random_get": [
+                "/jokes/random",
+                "get"
+            ],
+            "jokes_random_category_get": [
+                "/jokes/random/{category}",
+                "get"
+            ],
+            "jokes_categories_get": [
+                "/jokes/categories",
+                "get"
+            ],
+            "jokes_search_get": [
+                "/jokes/search",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "I'm having a party tonight and want to entertain my guests with some Chuck Norris jokes. Can you find a random joke for me to tell them?",
+            "I'm writing a blog post about Chuck Norris and his impact on pop culture. I need a joke related to 'music'. Can you find one for me?",
+            "I'm doing a presentation on Chuck Norris for my film class. Can you help me find a joke from the 'movie' category to lighten the mood?",
+            "I'm planning a trivia night and need some Chuck Norris jokes to include. Can you search for jokes that mention 'Texas'?",
+            "I'm working on a Chuck Norris-themed board game and need some jokes for the cards. Can you find jokes that involve 'sports'?",
+            "I'm having a party tonight and I want to entertain my guests with some Chuck Norris jokes. Can you find me 3 random jokes?"
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "jokes_random_get",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "jokes_random_category_get",
+                    "Action_Input": "{\"category\": \"music\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "jokes_random_category_get",
+                    "Action_Input": "{\"category\": \"movie\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "jokes_search_get",
+                    "Action_Input": "{\"query\": \"Texas\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "jokes_search_get",
+                    "Action_Input": "{\"query\": \"sports\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "jokes_random_get",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "jokes_random_get",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "jokes_random_get",
+                    "Action_Input": "{}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "Random Useless Facts",
+        "Description": "Get useless, but true facts",
+        "Category": "Entertainment",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{ \"openapi\": \"3.0.0\", \"info\": { \"version\": \"1.0.0\", \"title\": \"Random Useless Facts API\", \"description\": \"An API to retrieve random and daily useless facts in different languages and formats.\", \"contact\": { \"name\": \"Your Name\", \"email\": \"your.email@example.com\" } }, \"servers\": [{\"url\": \"https://uselessfacts.jsph.pl\"}],  \"paths\": { \"/api/v2/facts/random\": { \"get\": { \"summary\": \"Get random useless fact\", \"responses\": { \"200\": { \"description\": \"OK\", \"content\": { \"application/json\": { \"schema\": { \"type\": \"object\", \"properties\": { \"fact\": { \"type\": \"string\" } } } }, \"text/plain\": { \"schema\": { \"type\": \"string\" } } } } } } }, \"/api/v2/facts/today\": { \"get\": { \"summary\": \"Get today's useless fact\", \"responses\": { \"200\": { \"description\": \"OK\", \"content\": { \"application/json\": { \"schema\": { \"type\": \"object\", \"properties\": { \"fact\": { \"type\": \"string\" } } } }, \"text/plain\": { \"schema\": { \"type\": \"string\" } } } } } } } }, \"parameters\": { \"LanguageQueryParam\": { \"name\": \"language\", \"in\": \"query\", \"description\": \"The language code to specify the language of the fact.\", \"required\": false, \"schema\": { \"type\": \"string\", \"enum\": [\"en\", \"de\"] } } }, \"components\": { \"headers\": { \"AcceptHeader\": { \"description\": \"The Accept header to specify the response format.\", \"schema\": { \"type\": \"string\", \"enum\": [\"application/json\", \"text/plain\"] } } } } }",
+        "NLDocumentation": "api_v2_facts_random_get: Get random useless fact\nParameters: {}\nOutput: OK.\n - Format: application/json\n - Structure: Object{fact}\napi_v2_facts_today_get: Get today's useless fact\nParameters: {}\nOutput: OK.\n - Format: application/json\n - Structure: Object{fact}\n",
+        "Function_Description": {
+            "api_v2_facts_random_get": "Get random useless fact\nParameters: {}\nOutput: OK.\n - Format: application/json\n - Structure: Object{fact}",
+            "api_v2_facts_today_get": "Get today's useless fact\nParameters: {}\nOutput: OK.\n - Format: application/json\n - Structure: Object{fact}",
+            "components": ""
+        },
+        "Function_Projection": {
+            "api_v2_facts_random_get": [
+                "/api/v2/facts/random",
+                "get"
+            ],
+            "api_v2_facts_today_get": [
+                "/api/v2/facts/today",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "I'm hosting a trivia night at my place this evening. Could you fetch me a random useless fact that I can use to stump my friends? I want something they'll never guess.",
+            "I'm feeling a bit bored. Can you cheer me up with a random, useless fact? I'm in the mood for something quirky and unexpected.",
+            "I'm writing a blog post about interesting trivia. Can you provide me with a random fact that I can include? It should be something that most people wouldn't know.",
+            "I'm starting a new daily ritual of learning something new every day. Can you tell me today's useless fact?",
+            "I'm writing a daily newsletter and I want to include a fun fact in each issue. Can you give me today's useless fact that I can share with my subscribers?",
+            "I'm preparing a presentation for my class about random trivia. Could you help me find some fun, useless facts to include? I need about five facts."
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_facts_today_get",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_facts_today_get",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "api_v2_facts_random_get",
+                    "Action_Input": "{}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "apilayer weatherstack",
+        "Description": "Real-Time & Historical World Weather Data API",
+        "Category": "Weather",
+        "Authentication": {
+            "access_key": "***"
+        },
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{ \"openapi\": \"3.0.0\", \"info\": { \"title\": \"WeatherStack API\", \"description\": \"An API to get real-time weather data for locations around the world.\", \"version\": \"1.0.0\" }, \"servers\": [ { \"url\": \"http://api.weatherstack.com\", \"description\": \"Production server\" } ], \"paths\": { \"/current\": { \"get\": { \"summary\": \"Get current weather\", \"description\": \"Retrieve real-time weather data for a location.\", \"parameters\": [ { \"name\": \"access_key\", \"in\": \"query\", \"required\": true, \"schema\": { \"type\": \"string\" }, \"description\": \"Your API access key, obtained from your account dashboard.\" }, { \"name\": \"query\", \"in\": \"query\", \"required\": true, \"schema\": { \"type\": \"string\" }, \"description\": \"The location(s) you want to get weather data for. It can be a single location or multiple semicolon-separated location identifiers.\" }, { \"name\": \"units\", \"in\": \"query\", \"schema\": { \"type\": \"string\", \"enum\": [\"m\", \"s\", \"f\"] }, \"description\": \"[Optional] Specify the unit identifier for temperature and other measurements. (m: Metric, s: Scientific, f: Fahrenheit)\" }, { \"name\": \"callback\", \"in\": \"query\", \"schema\": { \"type\": \"string\" }, \"description\": \"[Optional] Use this parameter for JSONP callback function name wrapping.\" } ], \"responses\": { \"200\": { \"description\": \"Successful response containing real-time weather data.\", \"content\": { \"application/json\": { \"schema\": { \"$ref\": \"#/components/schemas/WeatherResponse\" } } } } } } } }, \"components\": { \"schemas\": { \"WeatherResponse\": { \"type\": \"object\", \"properties\": { \"request\": { \"type\": \"object\", \"properties\": { \"type\": { \"type\": \"string\", \"enum\": [\"City\", \"LatLon\", \"IP\", \"Zipcode\"] }, \"query\": { \"type\": \"string\" }, \"language\": { \"type\": \"string\" }, \"unit\": { \"type\": \"string\", \"enum\": [\"m\", \"s\", \"f\"] } } }, \"location\": { \"type\": \"object\", \"properties\": { \"name\": { \"type\": \"string\" }, \"country\": { \"type\": \"string\" }, \"region\": { \"type\": \"string\" }, \"lat\": { \"type\": \"string\" }, \"lon\": { \"type\": \"string\" }, \"timezone_id\": { \"type\": \"string\" }, \"localtime\": { \"type\": \"string\" }, \"localtime_epoch\": { \"type\": \"integer\" }, \"utc_offset\": { \"type\": \"string\" } } }, \"current\": { \"type\": \"object\", \"properties\": { \"observation_time\": { \"type\": \"string\" }, \"temperature\": { \"type\": \"integer\" }, \"weather_code\": { \"type\": \"integer\" }, \"weather_icons\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } }, \"weather_descriptions\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } }, \"wind_speed\": { \"type\": \"integer\" }, \"wind_degree\": { \"type\": \"integer\" }, \"wind_dir\": { \"type\": \"string\" }, \"pressure\": { \"type\": \"integer\" }, \"precip\": { \"type\": \"integer\" }, \"humidity\": { \"type\": \"integer\" }, \"cloudcover\": { \"type\": \"integer\" }, \"feelslike\": { \"type\": \"integer\" }, \"uv_index\": { \"type\": \"integer\" }, \"visibility\": { \"type\": \"integer\" } } } } } } } }",
+        "NLDocumentation": "current_get: Get current weather\nParameters: {\"access_key\": \"Required. string. Your API access key, obtained from your account dashboard.\", \"query\": \"Required. string. The location(s) you want to get weather data for. It can be a single location or multiple semicolon-separated location identifiers.\", \"units\": \"string. One of: [m, s, f]. [Optional] Specify the unit identifier for temperature and other measurements. (m: Metric, s: Scientific, f: Fahrenheit).\", \"callback\": \"string. [Optional] Use this parameter for JSONP callback function name wrapping.\"}\nOutput: Successful response containing real-time weather data.\n - Format: application/json\n - Structure: #WeatherResponse\n\nThe detailed output format for the tools is outlined below:\n#WeatherResponse: Object{request: Object{type, query, language, unit}, location: Object{name, country, region, lat, lon, timezone_id, localtime, localtime_epoch, utc_offset}, current: Object{observation_time, temperature, weather_code, weather_icons: Array[string], weather_descriptions: Array[string], wind_speed, wind_degree, wind_dir, pressure, precip, humidity, cloudcover, feelslike, uv_index, visibility}}\n",
+        "Function_Description": {
+            "current_get": "Get current weather\nParameters: {\"access_key\": \"Required. string. Your API access key, obtained from your account dashboard.\", \"query\": \"Required. string. The location(s) you want to get weather data for. It can be a single location or multiple semicolon-separated location identifiers.\", \"units\": \"string. One of: [m, s, f]. [Optional] Specify the unit identifier for temperature and other measurements. (m: Metric, s: Scientific, f: Fahrenheit).\", \"callback\": \"string. [Optional] Use this parameter for JSONP callback function name wrapping.\"}\nOutput: Successful response containing real-time weather data.\n - Format: application/json\n - Structure: #WeatherResponse",
+            "components": "The detailed output format for the tools is outlined below:\n#WeatherResponse: Object{request: Object{type, query, language, unit}, location: Object{name, country, region, lat, lon, timezone_id, localtime, localtime_epoch, utc_offset}, current: Object{observation_time, temperature, weather_code, weather_icons: Array[string], weather_descriptions: Array[string], wind_speed, wind_degree, wind_dir, pressure, precip, humidity, cloudcover, feelslike, uv_index, visibility}}"
+        },
+        "Function_Projection": {
+            "current_get": [
+                "/current",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "I'm planning a trip to Paris next week. Could you find out what the current weather is there? And please, make sure the temperature is in Fahrenheit, I'm more familiar with that.",
+            "I'm curious about the weather in multiple cities for a project. Can you get me the current weather for New York, Tokyo, and Sydney? I'd prefer the data in metric units.",
+            "I'm heading out for a run in San Francisco. Can you tell me what the current temperature is and how it feels outside? Also, I'd like to know the humidity and visibility.",
+            "I'm planning a picnic this weekend in London. Could you check the current weather for me? I'm particularly interested in the wind speed and direction.",
+            "I'm writing a blog post about the weather in different parts of the world. Can you fetch the current weather for Beijing, Moscow, and Rio de Janeiro? Please include the local time in each city.",
+            "I'm a science teacher preparing a lesson on weather patterns. Can you get me the current weather for Denver? I need the data in scientific units.",
+            "It's getting colder here. Can you find the current temperature in Fahrenheit for Toronto? I want to see if I need to bring a jacket.",
+            "I'm organizing an outdoor event next weekend. Is it possible to get the UV index and visibility in Los Angeles during that time?",
+            "I'm planning a road trip from New York to Los Angeles next week. Can you help me check the weather conditions for the major cities along the route, like Chicago, Denver, and Las Vegas? I'd like to know if there will be any severe weather conditions that might affect my trip.",
+            "I'm planning a beach day in Miami this weekend. Could you check the weather for me? I'd like to know if it's going to be sunny and what the UV index will be. Also, could you tell me what the sea temperature will be?"
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Paris\", \"units\": \"f\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"New York\", \"units\": \"m\"}"
+                },
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Tokyo\", \"units\": \"m\"}"
+                },
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Sydney\", \"units\": \"m\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"San Francisco\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"London\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Beijing\"}"
+                },
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Moscow\"}"
+                },
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Rio de Janeiro\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Denver\", \"units\": \"s\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Toronto\", \"units\": \"f\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Los Angeles\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Chicago\"}"
+                },
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Denver\"}"
+                },
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Las vegas\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "current_get",
+                    "Action_Input": "{\"access_key\": \"75619bf6f850d32727357000f37257d6\", \"query\": \"Miami\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "Free Dictionary",
+        "Description": "Definitions, phonetics, pronounciations, parts of speech, examples, synonyms",
+        "Category": "Dictionaries",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{ \"openapi\": \"3.0.0\", \"info\": { \"title\": \"Dictionary API\", \"version\": \"2.0\", \"description\": \"API to get word definitions for English words.\" }, \"servers\": [ { \"url\": \"https://api.dictionaryapi.dev\" } ], \"paths\": { \"/api/v2/entries/en/{word}\": { \"get\": { \"summary\": \"Get word definitions\", \"description\": \"Returns the definitions and related information for an English word.\", \"parameters\": [ { \"name\": \"word\", \"in\": \"path\", \"description\": \"The English word for which definitions are requested.\", \"required\": true, \"schema\": { \"type\": \"string\" } } ], \"responses\": { \"200\": { \"description\": \"Successful response with word definitions.\", \"content\": { \"application/json\": { \"schema\": { \"type\": \"array\", \"items\": { \"type\": \"object\", \"properties\": { \"word\": { \"type\": \"string\" }, \"phonetic\": { \"type\": \"string\" }, \"phonetics\": { \"type\": \"array\", \"items\": { \"type\": \"object\", \"properties\": { \"text\": { \"type\": \"string\" }, \"audio\": { \"type\": \"string\", \"format\": \"uri\" } } } }, \"origin\": { \"type\": \"string\" }, \"meanings\": { \"type\": \"array\", \"items\": { \"type\": \"object\", \"properties\": { \"partOfSpeech\": { \"type\": \"string\" }, \"definitions\": { \"type\": \"array\", \"items\": { \"type\": \"object\", \"properties\": { \"definition\": { \"type\": \"string\" }, \"example\": { \"type\": \"string\" }, \"synonyms\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } }, \"antonyms\": { \"type\": \"array\", \"items\": { \"type\": \"string\" } } } } } } } } } } } } } } } } } } }",
+        "NLDocumentation": "api_v2_entries_en_word_get: Get word definitions\nParameters: {\"word\": \"Required. string. The English word for which definitions are requested.\"}\nOutput: Successful response with word definitions.\n - Format: application/json\n - Structure: Array[Object{word, phonetic, phonetics: Array[Object{text, audio}], origin, meanings: Array[Object{partOfSpeech, definitions: Array[Object{definition, example, synonyms: Array[string], antonyms: Array[string]}]}]}]\n",
+        "Function_Description": {
+            "api_v2_entries_en_word_get": "Get word definitions\nParameters: {\"word\": \"Required. string. The English word for which definitions are requested.\"}\nOutput: Successful response with word definitions.\n - Format: application/json\n - Structure: Array[Object{word, phonetic, phonetics: Array[Object{text, audio}], origin, meanings: Array[Object{partOfSpeech, definitions: Array[Object{definition, example, synonyms: Array[string], antonyms: Array[string]}]}]}]",
+            "components": ""
+        },
+        "Function_Projection": {
+            "api_v2_entries_en_word_get": [
+                "/api/v2/entries/en/{word}",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "I'm preparing for a spelling bee and need to practice my pronunciation. Could you find the phonetics and audio pronunciation for the word 'quixotic' for me?",
+            "I'm writing a report on the etymology of words. Can you find the origin of the word 'serendipity'?",
+            "I'm trying to expand my vocabulary. Can you find synonyms for the word 'beautiful'?",
+            "I'm a bit confused about the usage of the word 'ephemeral'. Could you provide me with its definition and an example sentence?",
+            "I'm trying to understand the difference between 'affect' and 'effect'. Could you fetch the definitions and examples of both words?",
+            "I'm working on my English vocabulary. Can you help me understand the word \"serendipity\"? I need its definition, pronunciation, part of speech, and some examples of its usage. Also, provide me with some synonyms to expand my vocabulary.",
+            "I'm writing a poem and I need some inspiration. Could you find the definition, pronunciation, and examples of the word \"ephemeral\"? Also, I'd love to know its synonyms to enrich my poem."
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"quixotic\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"serendipity\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"beautiful\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"ephemeral\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"affect\"}"
+                },
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"effect\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"serendipity\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "api_v2_entries_en_word_get",
+                    "Action_Input": "{\"word\": \"ephemeral\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "WolframAlpha",
+        "Description": "Provides specific answers to questions using data and algorithms",
+        "Category": "Machine Learning",
+        "Authentication": {
+            "appid": "***"
+        },
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{\"openapi\": \"3.0.1\", \"info\": {\"title\": \"Wolfram Alpha Short Answers API\", \"version\": \"1.0.0\", \"description\": \"API to query Wolfram Alpha for short answers\"}, \"servers\": [{\"url\": \"http://api.wolframalpha.com/v1\"}], \"paths\": {\"/result\": {\"get\": {\"summary\": \"Get short answer from Wolfram Alpha\", \"description\": \"Use this endpoint to query Wolfram Alpha and get a short answer to your question.\", \"parameters\": [{\"name\": \"appid\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"Your Wolfram Alpha API AppID\"}, {\"name\": \"i\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The URL-encoded input for your query\"}, {\"name\": \"units\", \"in\": \"query\", \"required\": false, \"schema\": {\"type\": \"string\", \"enum\": [\"metric\", \"imperial\"]}, \"description\": \"Select what system of units to use for measurements and quantities (either 'metric' or 'imperial'). Defaults to location-based unit selection.\"}, {\"name\": \"timeout\", \"in\": \"query\", \"required\": false, \"schema\": {\"type\": \"integer\", \"format\": \"int32\"}, \"description\": \"The maximum amount of time (in seconds) allowed to process a query. Defaults to 5 seconds.\"}], \"responses\": {\"200\": {\"description\": \"Successful response with short answer\", \"content\": {\"text/plain\": {\"schema\": {\"type\": \"string\"}}}}, \"400\": {\"description\": \"Bad Request - The API did not find an input parameter while parsing\"}, \"501\": {\"description\": \"Not Implemented - The given input value cannot be interpreted by the API\"}, \"default\": {\"description\": \"Unexpected error occurred\", \"content\": {\"text/plain\": {\"schema\": {\"type\": \"string\"}}}}}}}}}",
+        "NLDocumentation": "result_get: Get short answer from Wolfram Alpha\nParameters: {\"appid\": \"Required. string. Your Wolfram Alpha API AppID.\", \"i\": \"Required. string. The URL-encoded input for your query.\", \"units\": \"string. One of: [metric, imperial]. Select what system of units to use for measurements and quantities (either 'metric' or 'imperial'). Defaults to location-based unit selection.\", \"timeout\": \"integer. The maximum amount of time (in seconds) allowed to process a query. Defaults to 5 seconds.\"}\nOutput: Successful response with short answer.\n - Format: text/plain\n - Structure: \n",
+        "Function_Description": {
+            "result_get": "Get short answer from Wolfram Alpha\nParameters: {\"appid\": \"Required. string. Your Wolfram Alpha API AppID.\", \"i\": \"Required. string. The URL-encoded input for your query.\", \"units\": \"string. One of: [metric, imperial]. Select what system of units to use for measurements and quantities (either 'metric' or 'imperial'). Defaults to location-based unit selection.\", \"timeout\": \"integer. The maximum amount of time (in seconds) allowed to process a query. Defaults to 5 seconds.\"}\nOutput: Successful response with short answer.\n - Format: text/plain\n - Structure:",
+            "components": ""
+        },
+        "Function_Projection": {
+            "result_get": [
+                "/result",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "Can you find the current temperature in New York City in Fahrenheit using the weather API?",
+            "Please help me calculate the square root of 625 using the math API.",
+            "I need to convert 5 miles to kilometers. Can you use the unit conversion API to help me with that?",
+            "Could you check the population of Tokyo for me using the demographics API?",
+            "I want to know the capital city of Australia. Can you use the geography API to find that out?",
+            "Hey, I'm trying to help my daughter with her homework and we're stuck on this math problem. Can you find out what the square root of 256 is?",
+            "I'm working on a science project and I need to know how many moons Jupiter has. Can you look that up for me?",
+            "I'm planning a trip to Paris and I'm curious about the weather. Can you find out what the average temperature is in Paris in July?",
+            "I'm doing a presentation on famous scientists. Can you find out when Albert Einstein was born?",
+            "I'm trying to lose weight and I'm counting calories. Can you tell me how many calories are in a medium-sized apple?",
+            "I'm writing a report on the solar system and I need some information. Can you tell me the diameter of Mars and the distance between Mars and Earth?",
+            "I'm trying to eat healthier and I need to know the nutritional value of some foods. Can you tell me how many calories are in an apple and a banana?",
+            "I'm planning a road trip and I need to calculate the distance. Can you tell me the distance from Los Angeles to New York by car? Also, can you tell me how long it would take to drive that distance?"
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"current temperature in New York City in Fahrenheit\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"the square root of 625\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"convert 5 miles to kilometers\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"the population of Tokyo\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"the capital city of Australia\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"the square root of 256\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"how many moons Jupiter has\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"what the average temperature is in Paris in July\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"when Albert Einstein was born\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"how many calories are in a medium-sized apple\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"the diameter of Mars\"}"
+                },
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"the distance between Mars and Earth\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"how many calories are in an apple\"}"
+                },
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"how many calories are in a banana\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"the distance from Los Angeles to New York by car\"}"
+                },
+                {
+                    "Action": "result_get",
+                    "Action_Input": "{\"appid\": \"LQGE4R-VPE825U26W\", \"i\": \"how long it would take to drive from Los Angeles to New York by car\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "Fruityvice",
+        "Description": "Data about all kinds of fruit",
+        "Category": "Food & Drink",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{\"openapi\": \"3.0.0\", \"info\": {\"title\": \"FruityVice API\", \"version\": \"1.0.0\", \"description\": \"API documentation for FruityVice, a service to get information about fruits.\"}, \"servers\": [{\"url\": \"https://www.fruityvice.com\"}], \"paths\": {\"api/fruit/{name}\": {\"get\": {\"summary\": \"Get a fruit information by its name\", \"operationId\": \"getFruitByName\", \"parameters\": [{\"name\": \"name\", \"in\": \"path\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/Fruit\"}}}}}}}}, \"/api/fruit/all\": {\"get\": {\"summary\": \"Get all fruits\", \"operationId\": \"getAllFruits\", \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/Fruit\"}}}}}}}}, \"/api/fruit/family/{family}\": {\"get\": {\"summary\": \"Get a fruit by family\", \"operationId\": \"getFruitByFamily\", \"parameters\": [{\"name\": \"family\", \"in\": \"path\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/Fruit\"}}}}, \"404\": {\"description\": \"Not Found\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/ErrorNotFound\"}}}}}}}, \"/api/fruit/genus/{genus}\": {\"get\": {\"summary\": \"Get fruits by genus\", \"operationId\": \"getFruitsByGenus\", \"parameters\": [{\"name\": \"genus\", \"in\": \"path\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/Fruit\"}}}}}, \"404\": {\"description\": \"Not Found\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/ErrorNotFound\"}}}}}}}, \"/api/fruit/order/{order}\": {\"get\": {\"summary\": \"Get fruits by order\", \"operationId\": \"getFruitsByOrder\", \"parameters\": [{\"name\": \"order\", \"in\": \"path\", \"required\": true, \"schema\": {\"type\": \"string\"}}], \"responses\": {\"200\": {\"description\": \"Success\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"$ref\": \"#/components/schemas/Fruit\"}}}}}, \"404\": {\"description\": \"Not Found\", \"content\": {\"application/json\": {\"schema\": {\"$ref\": \"#/components/schemas/ErrorNotFound\"}}}}}}}}, \"components\": {\"schemas\": {\"Fruit\": {\"type\": \"object\", \"properties\": {\"name\": {\"type\": \"string\"}, \"id\": {\"type\": \"integer\", \"format\": \"int64\"}, \"family\": {\"type\": \"string\"}, \"genus\": {\"type\": \"string\"}, \"order\": {\"type\": \"string\"}, \"nutritions\": {\"type\": \"object\", \"properties\": {\"carbohydrates\": {\"type\": \"integer\", \"format\": \"int64\"}, \"protein\": {\"type\": \"integer\", \"format\": \"int64\"}, \"fat\": {\"type\": \"integer\", \"format\": \"int64\"}, \"calories\": {\"type\": \"integer\", \"format\": \"int64\"}, \"sugar\": {\"type\": \"integer\", \"format\": \"int64\"}}}}}, \"ErrorNotFound\": {\"type\": \"object\", \"properties\": {\"error\": {\"type\": \"string\"}}}}}}",
+        "NLDocumentation": "getFruitByName: Get a fruit information by its name\nParameters: {\"name\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]\ngetAllFruits: Get all fruits\nParameters: {}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]\ngetFruitByFamily: Get a fruit by family\nParameters: {\"family\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: #Fruit\ngetFruitsByGenus: Get fruits by genus\nParameters: {\"genus\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]\ngetFruitsByOrder: Get fruits by order\nParameters: {\"order\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]\n\nThe detailed output format for the tools is outlined below:\n#Fruit: Object{name, id, family, genus, order, nutritions: Object{carbohydrates, protein, fat, calories, sugar}}\n#ErrorNotFound: Object{error}\n",
+        "Function_Description": {
+            "getFruitByName": "Get a fruit information by its name\nParameters: {\"name\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]",
+            "getAllFruits": "Get all fruits\nParameters: {}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]",
+            "getFruitByFamily": "Get a fruit by family\nParameters: {\"family\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: #Fruit",
+            "getFruitsByGenus": "Get fruits by genus\nParameters: {\"genus\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]",
+            "getFruitsByOrder": "Get fruits by order\nParameters: {\"order\": \"Required. string. \"}\nOutput: Success.\n - Format: application/json\n - Structure: Array[#Fruit]",
+            "components": "The detailed output format for the tools is outlined below:\n#Fruit: Object{name, id, family, genus, order, nutritions: Object{carbohydrates, protein, fat, calories, sugar}}\n#ErrorNotFound: Object{error}"
+        },
+        "Function_Projection": {
+            "getFruitByName": [
+                "api/fruit/{name}",
+                "get"
+            ],
+            "getAllFruits": [
+                "/api/fruit/all",
+                "get"
+            ],
+            "getFruitByFamily": [
+                "/api/fruit/family/{family}",
+                "get"
+            ],
+            "getFruitsByGenus": [
+                "/api/fruit/genus/{genus}",
+                "get"
+            ],
+            "getFruitsByOrder": [
+                "/api/fruit/order/{order}",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "Can you find me information about a fruit called \"mango\" using the API? I want to know its nutritional values like carbohydrates, protein, fat, calories, and sugar.",
+            "Please fetch all the fruits available in the API. I want to explore the variety and learn about different fruit options.",
+            "I'm curious about fruits belonging to the \"Rosaceae\" family. Can you retrieve information about a fruit from this family using the API? I'd like to know its name, genus, order, and nutritional values.",
+            "I'm trying to find fruits that belong to the \"Citrus\" genus. Could you help me retrieve a list of all such fruits using the API? I'm interested in their names, families, and nutritional values.",
+            "I'm planning to make a fruit salad, and I want to include fruits from the \"Sapindales\" order. Can you fetch a list of fruits belonging to this order using the API? I need their names, families, and nutritional values.",
+            "I'm planning a themed dinner and want to serve fruits from the 'Rosales' order. Can you provide me with a list of fruits in this order?",
+            "I'm interested in learning more about the 'Citrus' genus. Can you provide me with a list of fruits that belong to this genus?",
+            "I've been told that fruits from the 'Solanaceae' family are not good for my health. Can you find out which fruits belong to this family so I can avoid them?",
+            "I'm curious about the nutritional value of an apple. Can you find out how many calories, carbohydrates, proteins, fats, and sugars an apple has?",
+            "I'm trying to put together a fruit salad for a party this weekend. Can you help me find a list of fruits that are in season right now, and also tell me their nutritional values? I want to make sure I'm providing a healthy option for my guests.",
+            "I'm curious about the origin of my favorite fruits. Could you find out where apples, oranges, and bananas originally come from? Also, I'd like to know their peak harvesting times."
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "getFruitByName",
+                    "Action_Input": "{\"name\": \"mango\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getAllFruits",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitByFamily",
+                    "Action_Input": "{\"family\": \"Rosaceae\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitsByGenus",
+                    "Action_Input": "{\"genus\": \"Citrus\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitsByOrder",
+                    "Action_Input": "{\"order\": \"Sapindales\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitsByOrder",
+                    "Action_Input": "{\"order\": \"Rosales\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitsByGenus",
+                    "Action_Input": "{\"genus\": \"Citrus\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitByFamily",
+                    "Action_Input": "{\"family\": \"Solanaceae\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitByName",
+                    "Action_Input": "{\"name\": \"apple\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitByName",
+                    "Action_Input": "{\"name\": \"apple\"}"
+                },
+                {
+                    "Action": "getFruitByName",
+                    "Action_Input": "{\"name\": \"banana\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getFruitByName",
+                    "Action_Input": "{\"name\": \"apple\"}"
+                },
+                {
+                    "Action": "getFruitByName",
+                    "Action_Input": "{\"name\": \"orange\"}"
+                },
+                {
+                    "Action": "getFruitByName",
+                    "Action_Input": "{\"name\": \"banana\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "Cataas",
+        "Description": "Cat as a service (cats pictures and gifs)",
+        "Category": "Animals",
+        "Authentication": {},
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{\"openapi\": \"3.0.1\", \"info\": {\"version\": \"1.0.0\", \"title\": \"Cataas\", \"description\": \"Cataas API\", \"termsOfService\": \"http://api_url/terms/\", \"contact\": {\"name\": \"Kevin Balicot\", \"email\": \"kevinbalicot@gmail.com\", \"url\": \"https://cataas.com/\"}, \"license\": {\"name\": \"Apache 2.0\", \"url\": \"https://www.apache.org/licenses/LICENSE-2.0.html\"}}, \"servers\": [{\"url\": \"https://cataas.com/\"}], \"tags\": [{\"name\": \"Cats\", \"description\": \"Cat managing\"}, {\"name\": \"API\", \"description\": \"Cat metadata\"}], \"components\": {\"schemas\": {\"Cat\": {\"type\": \"object\", \"properties\": {\"_id\": {\"type\": \"string\"}, \"tags\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}, \"default\": []}, \"owner\": {\"type\": \"string\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"datetime\"}, \"updatedAt\": {\"type\": \"string\", \"format\": \"datetime\"}}, \"required\": [\"file\", \"tags\"]}, \"CatEdit\": {\"type\": \"object\", \"properties\": {\"tags\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}, \"default\": []}}}, \"CatError\": {\"type\": \"object\", \"properties\": {\"message\": {\"type\": \"string\"}, \"code\": {\"type\": \"integer\"}}}}}, \"paths\": {\"/cat\": {\"get\": {\"description\": \"Get random cat\", \"tags\": [\"Cats\"], \"operationId\": \"getRandomCat\", \"parameters\": [{\"name\": \"type\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Filter by cat type\"}, {\"name\": \"width\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired width of the cat image\"}, {\"name\": \"height\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired height of the cat image\"}, {\"name\": \"html\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include HTML code\"}, {\"name\": \"json\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include JSON data\"}], \"responses\": {\"200\": {\"description\": \"Cat returned\"}}}}, \"/cat/{id}\": {\"get\": {\"description\": \"Get cat by id\", \"tags\": [\"Cats\"], \"operationId\": \"findCatById\", \"parameters\": [{\"name\": \"id\", \"in\": \"path\", \"schema\": {\"type\": \"string\"}, \"required\": true, \"description\": \"Cat ID\"}, {\"name\": \"type\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Filter by cat type\"}, {\"name\": \"width\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired width of the cat image\"}, {\"name\": \"height\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired height of the cat image\"}, {\"name\": \"html\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include HTML code\"}, {\"name\": \"json\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include JSON data\"}], \"responses\": {\"200\": {\"description\": \"Cat returned\"}, \"404\": {\"description\": \"Cat not found\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"message\": {\"type\": \"string\"}, \"code\": {\"type\": \"integer\"}}}}}}}}}, \"/cat/{tag}\": {\"get\": {\"description\": \"Get random cat by tag\", \"tags\": [\"Cats\"], \"operationId\": \"findCatByTag\", \"parameters\": [{\"name\": \"tag\", \"in\": \"path\", \"schema\": {\"type\": \"string\"}, \"required\": true, \"description\": \"Tag to filter cats\"}, {\"name\": \"type\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Filter by cat type\"}, {\"name\": \"width\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired width of the cat image\"}, {\"name\": \"height\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired height of the cat image\"}, {\"name\": \"html\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include HTML code\"}, {\"name\": \"json\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include JSON data\"}], \"responses\": {\"200\": {\"description\": \"Cat returned\"}}}}, \"/cat/says/{text}\": {\"get\": {\"description\": \"Get random cat saying text\", \"tags\": [\"Cats\"], \"operationId\": \"findCatWithText\", \"parameters\": [{\"name\": \"text\", \"in\": \"path\", \"schema\": {\"type\": \"string\"}, \"required\": true, \"description\": \"Text that the cat says\"}, {\"name\": \"type\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Filter by cat type\"}, {\"name\": \"width\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired width of the cat image\"}, {\"name\": \"height\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Desired height of the cat image\"}, {\"name\": \"html\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include HTML code\"}, {\"name\": \"json\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Include JSON data\"}], \"responses\": {\"200\": {\"description\": \"Cat returned\"}}}}, \"/api/cats\": {\"get\": {\"description\": \"Will return all cats\", \"tags\": [\"API\"], \"operationId\": \"api\", \"parameters\": [{\"name\": \"limit\", \"in\": \"query\", \"schema\": {\"type\": \"number\", \"default\": 10}, \"description\": \"Number of cats to retrieve\"}, {\"name\": \"skip\", \"in\": \"query\", \"schema\": {\"type\": \"number\", \"default\": 0}, \"description\": \"Number of cats to skip\"}, {\"name\": \"tags\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"Filter by tags\"}], \"responses\": {\"200\": {\"description\": \"List of cats\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"required\": [\"file\", \"tags\"], \"type\": \"object\", \"properties\": {\"_id\": {\"type\": \"string\"}, \"tags\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}, \"default\": []}, \"owner\": {\"type\": \"string\"}, \"createdAt\": {\"type\": \"string\", \"format\": \"datetime\"}, \"updatedAt\": {\"type\": \"string\", \"format\": \"datetime\"}}}}}}}}}}, \"/api/tags\": {\"get\": {\"description\": \"Will return all tags\", \"tags\": [\"API\"], \"operationId\": \"tags\", \"responses\": {\"200\": {\"description\": \"List of tags\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"array\", \"items\": {\"type\": \"string\"}}}}}}}}, \"/api/count\": {\"get\": {\"description\": \"Count how many cats\", \"tags\": [\"API\"], \"operationId\": \"count\", \"responses\": {\"200\": {\"description\": \"Count of cats\", \"content\": {\"application/json\": {\"schema\": {\"type\": \"object\", \"properties\": {\"number\": {\"type\": \"integer\"}}}}}}}}}}}",
+        "NLDocumentation": "getRandomCat: Get random cat\nParameters: {\"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure: \nfindCatById: Get cat by id\nParameters: {\"id\": \"Required. string. Cat ID.\", \"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure: \nfindCatByTag: Get random cat by tag\nParameters: {\"tag\": \"Required. string. Tag to filter cats.\", \"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure: \nfindCatWithText: Get random cat saying text\nParameters: {\"text\": \"Required. string. Text that the cat says.\", \"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure: \napi: Will return all cats\nParameters: {\"limit\": \"number. Number of cats to retrieve.\", \"skip\": \"number. Number of cats to skip.\", \"tags\": \"string. Filter by tags.\"}\nOutput: List of cats.\n - Format: application/json\n - Structure: Array[Object{_id, tags: Array[string], owner, createdAt, updatedAt}]\ntags: Will return all tags\nParameters: {}\nOutput: List of tags.\n - Format: application/json\n - Structure: Array[string]\ncount: Count how many cats\nParameters: {}\nOutput: Count of cats.\n - Format: application/json\n - Structure: Object{number}\n\nThe detailed output format for the tools is outlined below:\n#Cat: Object{_id, tags: Array[string], owner, createdAt, updatedAt}\n#CatEdit: Object{tags: Array[string]}\n#CatError: Object{message, code}\n",
+        "Function_Description": {
+            "getRandomCat": "Get random cat\nParameters: {\"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure:",
+            "findCatById": "Get cat by id\nParameters: {\"id\": \"Required. string. Cat ID.\", \"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure:",
+            "findCatByTag": "Get random cat by tag\nParameters: {\"tag\": \"Required. string. Tag to filter cats.\", \"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure:",
+            "findCatWithText": "Get random cat saying text\nParameters: {\"text\": \"Required. string. Text that the cat says.\", \"type\": \"string. Filter by cat type.\", \"width\": \"string. Desired width of the cat image.\", \"height\": \"string. Desired height of the cat image.\", \"html\": \"string. Include HTML code.\", \"json\": \"string. Include JSON data.\"}\nOutput: Cat returned.\n - Format: \n - Structure:",
+            "api": "Will return all cats\nParameters: {\"limit\": \"number. Number of cats to retrieve.\", \"skip\": \"number. Number of cats to skip.\", \"tags\": \"string. Filter by tags.\"}\nOutput: List of cats.\n - Format: application/json\n - Structure: Array[Object{_id, tags: Array[string], owner, createdAt, updatedAt}]",
+            "tags": "Will return all tags\nParameters: {}\nOutput: List of tags.\n - Format: application/json\n - Structure: Array[string]",
+            "count": "Count how many cats\nParameters: {}\nOutput: Count of cats.\n - Format: application/json\n - Structure: Object{number}",
+            "components": "The detailed output format for the tools is outlined below:\n#Cat: Object{_id, tags: Array[string], owner, createdAt, updatedAt}\n#CatEdit: Object{tags: Array[string]}\n#CatError: Object{message, code}"
+        },
+        "Function_Projection": {
+            "getRandomCat": [
+                "/cat",
+                "get"
+            ],
+            "findCatById": [
+                "/cat/{id}",
+                "get"
+            ],
+            "findCatByTag": [
+                "/cat/{tag}",
+                "get"
+            ],
+            "findCatWithText": [
+                "/cat/says/{text}",
+                "get"
+            ],
+            "api": [
+                "/api/cats",
+                "get"
+            ],
+            "tags": [
+                "/api/tags",
+                "get"
+            ],
+            "count": [
+                "/api/count",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "Hey, can you help me find a random cat picture? I need one with a width of 500 pixels and a height of 300 pixels. It would be great if you could return it in JSON format.",
+            "I'm looking for a cat picture with the tag 'cute'. Could you find me a random one? Make sure it has a width of 800 pixels and a height of 600 pixels.",
+            "I want to surprise my friend with a cat picture that says 'Happy Birthday!' Can you find a random cat image with that text?",
+            "I need a list of all the available cat tags. Can you retrieve them for me?",
+            "I'm curious about how many cats are available in the database. Can you count them for me?",
+            "I want to browse through a variety of cat pictures. Can you retrieve a list of 3 cats for me?",
+            "I'm feeling a bit down and could use a pick-me-up. Could you find me a random picture of a cat? Make sure it's a cute one!",
+            "I'm working on a presentation about cats and need some visuals. Can you get me a picture of a cat that's exactly 500 pixels wide and 300 pixels high? I'd prefer it if the cat was a tabby.",
+            "I need a funny image for a birthday card. Can you find me a picture of a cat with the text 'Happy Birthday' on it?",
+            "I'm planning a surprise party for my friend who loves cats. Could you help me design an invitation? I'd like a picture of a cat with a party hat, and the text \"You're invited to a purr-fect party!\" on it.",
+            "I'm starting a blog about my life as a cat owner. Could you provide me with a cat gif for my first post? I'd also like to add a caption saying \"Welcome to my cat-tastic journey!\".",
+            "I'm making a birthday card for my niece who loves kittens. Could you find a cute kitten picture for me? And could you add the text \"Happy Birthday!\" on it?"
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "getRandomCat",
+                    "Action_Input": "{\"width\": \"500\", \"height\": \"300\", \"json\": \"true\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "findCatByTag",
+                    "Action_Input": "{\"tag\": \"cute\", \"width\": \"800\", \"height\": \"600\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "findCatWithText",
+                    "Action_Input": "{\"text\": \"Happy Birthday!\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "tags",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "count",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "getRandomCat",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "getRandomCat",
+                    "Action_Input": "{}"
+                },
+                {
+                    "Action": "getRandomCat",
+                    "Action_Input": "{}"
+                }
+            ],
+            [
+                {
+                    "Action": "getRandomCat",
+                    "Action_Input": "{\"type\": \"cute\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "getRandomCat",
+                    "Action_Input": "{\"type\": \"tabby\", \"width\": \"500\", \"height\": \"300\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "findCatWithText",
+                    "Action_Input": "{\"text\": \"Happy Birthday!\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "findCatWithText",
+                    "Action_Input": "{\"text\": \"You're invited to a purr-fect party!\", \"type\": \"party hat\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "findCatWithText",
+                    "Action_Input": "{\"text\": \"Welcome to my cat-tastic journey!\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "findCatWithText",
+                    "Action_Input": "{\"text\": \"Happy Birthday!\", \"type\": \"cute\"}"
+                }
+            ]
+        ]
+    },
+    {
+        "Name": "CurrencyBeacon",
+        "Description": "Real-time and historical currency rates JSON API",
+        "Category": "Currency Exchange",
+        "Authentication": {
+            "api_key": "***"
+        },
+        "external_tools": [
+            "retrieval"
+        ],
+        "Documentation": "{\"openapi\": \"3.0.1\", \"info\": {\"title\": \"CurrencyBeacon Global Currency Data API\", \"version\": \"1.0.0\", \"description\": \"API documentation for real-time and historical exchange rates.\", \"contact\": {\"email\": \"support@currencybeacon.com\"}}, \"servers\": [{\"url\": \"https://api.currencybeacon.com/v1\"}], \"paths\": {\"/latest\": {\"get\": {\"summary\": \"Get real-time exchange rates for all supported currencies.\", \"parameters\": [{\"name\": \"api_key\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"API key for authentication.\"}, {\"name\": \"base\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The base currency you would like to use for your rates.\"}, {\"name\": \"symbols\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"A list of currencies you want to see the rates for.\"}], \"responses\": {\"200\": {\"schema\": {\"type\": \"string\"}, \"description\": \"Successful response with real-time exchange rates.\"}}}}, \"/historical\": {\"get\": {\"summary\": \"Get historical exchange rate data for a specific date.\", \"parameters\": [{\"name\": \"api_key\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"API key for authentication.\"}, {\"name\": \"base\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The base currency you would like to use for your rates.\"}, {\"name\": \"date\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The historical date you would like to access.\"}, {\"name\": \"symbols\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"A list of currencies you want to see the rates for.\"}], \"responses\": {\"200\": {\"description\": \"Successful response with historical exchange rate data.\", \"schema\": {\"type\": \"string\"}}}}}, \"/timeseries\": {\"get\": {\"summary\": \"Get historical exchange rate data for a specified time range.\", \"parameters\": [{\"name\": \"api_key\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"API key for authentication.\"}, {\"name\": \"base\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The base currency you would like to use for your rates.\"}, {\"name\": \"start_date\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The start date for the time series you would like to access.\"}, {\"name\": \"end_date\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The end date for the time series you would like to access.\"}, {\"name\": \"symbols\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"A list of currencies you want to see the rates for.\"}], \"responses\": {\"200\": {\"schema\": {\"type\": \"string\"}, \"description\": \"Successful response with historical exchange rate data.\"}}}}, \"/currencies\": {\"get\": {\"summary\": \"Get information about supported currencies.\", \"parameters\": [{\"name\": \"api_key\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"API key for authentication.\"}, {\"name\": \"type\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The type of currencies (fiat or crypto).\"}], \"responses\": {\"200\": {\"schema\": {\"type\": \"string\"}, \"description\": \"Successful response with information about supported currencies.\"}}}}, \"/convert\": {\"get\": {\"summary\": \"Convert an amount from one currency to another.\", \"parameters\": [{\"name\": \"api_key\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"API key for authentication.\"}, {\"name\": \"from\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The base currency you would like to use for your rates.\"}, {\"name\": \"to\", \"in\": \"query\", \"schema\": {\"type\": \"string\"}, \"description\": \"The currency you would like to convert to.\"}, {\"name\": \"amount\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"The amount to convert.\"}], \"responses\": {\"200\": {\"schema\": {\"type\": \"string\"}, \"description\": \"Successful response with converted currency.\"}}}}}, \"components\": {\"parameters\": {\"api_key\": {\"name\": \"api_key\", \"in\": \"query\", \"required\": true, \"schema\": {\"type\": \"string\"}, \"description\": \"API key for authentication.\"}}}}",
+        "NLDocumentation": "latest_get: Get real-time exchange rates for all supported currencies.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"base\": \"Required. string. The base currency you would like to use for your rates.\", \"symbols\": \"string. A list of currencies you want to see the rates for.\"}\nOutput: Successful response with real-time exchange rates.\n - Format: \n - Structure: \nhistorical_get: Get historical exchange rate data for a specific date.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"base\": \"Required. string. The base currency you would like to use for your rates.\", \"date\": \"Required. string. The historical date you would like to access.\", \"symbols\": \"string. A list of currencies you want to see the rates for.\"}\nOutput: Successful response with historical exchange rate data.\n - Format: \n - Structure: \ntimeseries_get: Get historical exchange rate data for a specified time range.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"base\": \"Required. string. The base currency you would like to use for your rates.\", \"start_date\": \"Required. string. The start date for the time series you would like to access.\", \"end_date\": \"Required. string. The end date for the time series you would like to access.\", \"symbols\": \"string. A list of currencies you want to see the rates for.\"}\nOutput: Successful response with historical exchange rate data.\n - Format: \n - Structure: \ncurrencies_get: Get information about supported currencies.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"type\": \"Required. string. The type of currencies (fiat or crypto).\"}\nOutput: Successful response with information about supported currencies.\n - Format: \n - Structure: \nconvert_get: Convert an amount from one currency to another.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"from\": \"Required. string. The base currency you would like to use for your rates.\", \"to\": \"string. The currency you would like to convert to.\", \"amount\": \"Required. string. The amount to convert.\"}\nOutput: Successful response with converted currency.\n - Format: \n - Structure: \n",
+        "Function_Description": {
+            "latest_get": "Get real-time exchange rates for all supported currencies.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"base\": \"Required. string. The base currency you would like to use for your rates.\", \"symbols\": \"string. A list of currencies you want to see the rates for.\"}\nOutput: Successful response with real-time exchange rates.\n - Format: \n - Structure:",
+            "historical_get": "Get historical exchange rate data for a specific date.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"base\": \"Required. string. The base currency you would like to use for your rates.\", \"date\": \"Required. string. The historical date you would like to access.\", \"symbols\": \"string. A list of currencies you want to see the rates for.\"}\nOutput: Successful response with historical exchange rate data.\n - Format: \n - Structure:",
+            "timeseries_get": "Get historical exchange rate data for a specified time range.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"base\": \"Required. string. The base currency you would like to use for your rates.\", \"start_date\": \"Required. string. The start date for the time series you would like to access.\", \"end_date\": \"Required. string. The end date for the time series you would like to access.\", \"symbols\": \"string. A list of currencies you want to see the rates for.\"}\nOutput: Successful response with historical exchange rate data.\n - Format: \n - Structure:",
+            "currencies_get": "Get information about supported currencies.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"type\": \"Required. string. The type of currencies (fiat or crypto).\"}\nOutput: Successful response with information about supported currencies.\n - Format: \n - Structure:",
+            "convert_get": "Convert an amount from one currency to another.\nParameters: {\"api_key\": \"Required. string. API key for authentication.\", \"from\": \"Required. string. The base currency you would like to use for your rates.\", \"to\": \"string. The currency you would like to convert to.\", \"amount\": \"Required. string. The amount to convert.\"}\nOutput: Successful response with converted currency.\n - Format: \n - Structure:",
+            "components": ""
+        },
+        "Function_Projection": {
+            "latest_get": [
+                "/latest",
+                "get"
+            ],
+            "historical_get": [
+                "/historical",
+                "get"
+            ],
+            "timeseries_get": [
+                "/timeseries",
+                "get"
+            ],
+            "currencies_get": [
+                "/currencies",
+                "get"
+            ],
+            "convert_get": [
+                "/convert",
+                "get"
+            ]
+        },
+        "Instructions": [
+            "Hey, can you help me find out the current exchange rate for USD to EUR using the currency API? I need to know how many Euros I'll get for 100 US dollars.",
+            "Could you please fetch the historical exchange rate data for GBP to CAD on January 1, 2022, using the currency API? I want to analyze the currency fluctuations for that day.",
+            "I'm planning a trip to Japan next month. Can you retrieve the exchange rate data for USD to JPY from October 1, 2021, to November 30, 2021, using the currency API? I want to compare the rates and estimate my expenses.",
+            "I need to convert 500 Euros to US dollars. Can you use the currency API to convert the amount from EUR to USD for me?",
+            "I want to know the current exchange rates for USD, EUR, and GBP. Can you fetch the real-time rates for these currencies using the currency API?",
+            "I'm planning a vacation to Thailand next year. Can you fetch the exchange rate data for THB to USD from January 1, 2023, to December 31, 2023, using the currency API? I want to estimate my budget.",
+            "I'm planning a trip to Japan next month. Could you find out how much 1000 US dollars would be in Japanese yen using the current exchange rate?",
+            "I need to send some money to my friend in France. Can you tell me how much 200 US dollars would convert to in Euros?",
+            "I'm a forex trader and I need to know the current exchange rates for the US dollar against the Euro, British pound, and Japanese yen. Can you get this information for me?",
+            "I'm planning a trip to Japan next month, and I want to start budgeting. Can you tell me the current exchange rate from US dollars to Japanese yen, and also provide the average exchange rate for July?",
+            "I'm a business owner and I need to invoice a client in Europe. Can you provide me with the current exchange rate from US dollars to Euros, and also the average rate for the July so I can set a fair price?"
+        ],
+        "Golden_Answers": [
+            [
+                {
+                    "Action": "latest_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"symbols\": \"EUR\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "historical_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"GBP\", \"date\": \"2022-01-01\", \"symbols\": \"CAD\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "timeseries_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"start_date\": \"2021-10-01\", \"end_date\": \"2021-11-30\", \"symbols\": \"JPY\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "convert_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"from\": \"EUR\", \"to\": \"USD\", \"amount\": 500}"
+                }
+            ],
+            [
+                {
+                    "Action": "latest_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"symbols\": \"symbols\": [\"EUR\", \"GBP\"]}"
+                }
+            ],
+            [
+                {
+                    "Action": "timeseries_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"THB\", \"start_date\": \"2023-01-01\", \"end_date\": \"2023-12-31\", \"symbols\": \"USD\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "convert_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"from\": \"USD\", \"to\": \"JPY\", \"amount\": 1000}"
+                }
+            ],
+            [
+                {
+                    "Action": "convert_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"from\": \"USD\", \"to\": \"EUR\", \"amount\": 200}"
+                }
+            ],
+            [
+                {
+                    "Action": "latest_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"symbols\": \"symbols\": [\"EUR\", \"GBP\", \"JPY\"]}"
+                }
+            ],
+            [
+                {
+                    "Action": "latest_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"symbols\": \"symbols\": \"JPY\"}"
+                },
+                {
+                    "Action": "timeseries_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"start_date\": \"2023-07-01\", \"end_date\": \"2023-07-31\", \"symbols\": \"JPY\"}"
+                }
+            ],
+            [
+                {
+                    "Action": "latest_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"symbols\": \"symbols\": \"EUR\"}"
+                },
+                {
+                    "Action": "timeseries_get",
+                    "Action_Input": "{\"api_key\": \"8BbG6gN9g3Y29h5EMMSEw6avX0c1LYkw\", \"base\": \"USD\", \"start_date\": \"2023-07-01\", \"end_date\": \"2023-07-31\", \"symbols\": \"EUR\"}"
+                }
+            ]
+        ]
+    }
+]

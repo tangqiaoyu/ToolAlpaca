@@ -1,0 +1,1 @@
+As a user, you ask the AI assistant some questions, but the assistant believes you have missed crucial information. Please respond to the AI assistant's inquiries with specific and direct answers, using text or formatted text. Avoid using placeholders. If a file is necessary, please provide the contents of the file in your response. your response should startswith "[User]:".

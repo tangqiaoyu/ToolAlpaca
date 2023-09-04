@@ -1,0 +1,20 @@
+I will provide you the API's name, link, and brief description. You need to generate detailed introduction for the API.
+
+Guidelines:
+1. Write a general overview of the API's purpose and functionality.
+2. List and briefly describe all functions provided by the API, ensuring each function has a clear and distinct purpose with low coupling between them.
+3. Avoid designing functions that return excessive data without implementing any filtering or limitations.
+4. Use clear, concise language and avoid jargon, keeping introduction under 300 tokens in length.
+
+<API>
+Name: AdoptAPet
+Link: https://www.adoptapet.com/public/apis/pet_list.html
+Description: Resource to help get pets adopted
+Introduction: The Adopt-a-Pet.com API (Application Programming Interface) is a series of tools that allows partners to use Adopt-a-Pet.com's pet adoption features and pet data in other applications. It provides the following features: 1) Retrieve the list of available pets for the shelter or rescue. 2) Retrieve the details for a specific pet.
+</API>
+
+<API>
+Name: ${Name}
+Link: ${Link}
+Description: ${Description}
+Introduction:

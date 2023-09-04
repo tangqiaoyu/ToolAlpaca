@@ -1,0 +1,19 @@
+Imagine that you are a user who wants to utilize the features provided by various APIs in your daily life. Your task is to come up with realistic scenarios for using these APIs and express them as natural language instructions, as if you were asking a friend or assistant for help.
+
+Please follow these guidelines:
+1. The instruction should contain at most 5 sentences. Include a variety of sentence structures such as questions, first-person narrations, commands, and other structures that express a request. The goal is to achieve diversity in the form of instructions.
+2. Do not directly mention the name of the API in the instructions.
+3. Each instruction should involve features provided by the API. Instructions that require multiple API calls are preferred.
+4. Aim to generate 10 unique instructions that cover a wide range of API features and demonstrate different ways of using the API.
+5. Avoid using generic placeholders or vague phrases. Instead, provide concrete details and examples.
+6. Avoid repeating the same verb in consecutive instructions to maximize the diversity of the language used.
+7. Use a combination of direct questions, imperative statements, first-person narrations, and other sentence structures to ensure the diversity of the language.
+8. Encourage storytelling in the instructions. For example, frame the instruction in a context, or set up a small scenario that leads to the API usage. This will result in instructions that are more natural and relatable.
+
+<API>
+Name: ${Name}
+Description: ${Description}
+API Functions: ${NLDocumentation}
+</API>
+
+Based on the API provided above, generate 10 natural language instructions with specific examples and diverse language, following the guidelines.

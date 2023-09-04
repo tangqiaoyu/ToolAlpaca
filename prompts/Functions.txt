@@ -1,0 +1,20 @@
+You are given the name, link, and brief description of an API. Your task is to create a comprehensive introduction for this API.
+
+Guidelines:
+1. For each function of the API, detail its purpose, input requirements, and output results.
+2. For function input, present it in JSON format. Each key should be input parameter's name, and its value should be a string indicate whether it's required or not, its type, and a brief description, such as "Required/Optional. Integer. {some description}".
+3. Do not design functions which will return excessive data, such as 'getAllXxx'. If such a function is necessary, incorporate input parameters to limit, filter, or paginate the results.
+4. Limit the number of functions generated. Only generate functions based on the API Description. Do not create unnecessary functions that overcomplicate the API.
+5. If any API functions require fields that are not directly accessible to the users (like IDs, internal codes, etc.) as inputs, there must be corresponding methods for users to retrieve these values, such as through 'search' or 'list' functions.
+6. Output with the following format:
+    {index}. Name: {function name, follow the camel case naming convention.}
+    Description: {function short description}
+    Input: {function input, presented as a single line without any formatting}
+    Output: {function output, describe all the information that this function will return}
+
+Begin!
+
+Name: ${Name}
+Link: ${Link}
+Introduction: ${Introduction}
+Functions:

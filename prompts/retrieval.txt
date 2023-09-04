@@ -1,0 +1,9 @@
+Given the following API output, please extract the specified information. 
+
+**API Output:**
+${output}
+
+**Information to Extract:**
+${query}
+
+Please provide the extracted information in a clear and concise format.

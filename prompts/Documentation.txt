@@ -1,0 +1,18 @@
+Please generate API documentation that conforms to the OpenAPI Specification for the provided API, following these guidelines:
+1. Name the API with the 'title' field in the 'info' section, and include a 'version' and 'description' field to succinctly describe the API's purpose and functionality.
+2. Exclude the 'tags' field in the specification.
+3. For each function:
+  - Design an endpoint, adhering to its definition and input/output requirements.
+  - Use the function's name in the 'operationId' field. Decompose the description of the function into appropriate fields.
+  - For the endpoint's input, provide additional details in the 'parameters' section to complement the function's input requirements. For instance, use 'enum' to specify valid parameter values.
+  - For each endpoint's response, generate a detailed model, including status codes and structured return values. This should be based on the function's output description, detailing each field whenever possible.
+  - If an endpoint's input includes fields unknown to the user, like IDs, these fields must be included in the responses of relevant 'search', 'list', or similar endpoints.
+4. Include a 'description' field for each input parameter and 'requestBody' in the operation object, to explain their purpose and usage.
+5. Ensure that the OpenAPI Specification is comprehensive, capturing all functions mentioned in the API Introduction.
+6. For parameters/schemas with a 'type' of 'object', you must include their properties in the specification.
+
+Name: ${Name}
+Link: ${Link}
+Description: ${Description}
+Functions: ${Functions}
+OpenAPI Spec(Format with JSON, indent=1):

@@ -1,6 +1,8 @@
 # ToolAlpaca: Generalized Tool Learning for Language Models with 3000 Simulated Cases
 
 [![arXiv](https://img.shields.io/badge/arXiv-2306.05301-<COLOR>.svg?style=flat-square)](https://arxiv.org/abs/2306.05301)
+[![](https://img.shields.io/badge/huggingface-ToolAlpaca_7B-blue)](https://huggingface.co/TangQiaoYu/ToolAlpaca-7B)
+[![](https://img.shields.io/badge/huggingface-ToolAlpaca_13B-blue)](https://huggingface.co/TangQiaoYu/ToolAlpaca-13B)
 
 <div align=center><img src="./figures/ToolAlpaca.png" width="400px" /></div>
 
@@ -80,14 +82,38 @@ python instance_generation/generation.py -api ./data/api_data.json -out ./data -
 ## Train
 To train Toolapaca, we need to create a prompt to organize the dataset in a format that the standard SFT training code can read, similar to what is done in build_dataset.py. Afterward, we can proceed with training using the standard SFT method, only optimizing the loss on `thought`, `action`, and `action input`.
 
+You can Find our models on huggingface hub: [ToolAlpaca-7B](https://huggingface.co/TangQiaoYu/ToolAlpaca-7B), [ToolAlpaca-13B](https://huggingface.co/TangQiaoYu/ToolAlpaca-13B).
 
 ## Evaluation
+- for simulated APIs:
+```bash
+# start the api simulator
+python instance_generation/simulator.py -api ./data/eval_simulated.json
+
+# get LLM outputs
+python instance_generation/generation.py \
+  -api ./data/eval_simulated.json \
+  -out ./eval \
+  -llm TangQiaoYu/ToolAlpaca-13B \
+  --agent_prompt test_v2 \
+  --use_cache
+
+# evaluation with LLM like GPT-4
+python evaluation.py -api ${api_data_path} -out ./eval
+```
+
+- for real APIs:
+You should register the websites and get the API_KEYs.
 
 ```bash
-python instance_generation/generation.py -api ./data/eval_simulated.json -out ./eval -llm ${llm_name_or_path} --agent_prompt ${agent_prompt_type} --use_cache
-python evaluation.py -api ${api_data_path} -out ./eval
+python instance_generation/generation.py \
+-api ./data/eval_real.json \
+-out ./data \
+-llm TangQiaoYu/ToolAlpaca-13B \
+--agent_prompt test_v2 \
+--use_cache \
+--real
 
-python instance_generation/generation.py -api ./data/eval_real.json -out ./data -llm ${llm_name_or_path} --agent_prompt ${agent_prompt_type} --use_cache --real
 python evaluation.py -api ${api_data_path} -out ./eval
 ```
 

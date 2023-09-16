@@ -107,12 +107,11 @@ You should register the websites and get the API_KEYs.
 
 ```bash
 python instance_generation/generation.py \
--api ./data/eval_real.json \
--out ./data \
--llm TangQiaoYu/ToolAlpaca-13B \
---agent_prompt test_v2 \
---use_cache \
---real
+  -api ./data/eval_real.json \
+  -out ./data \
+  -llm TangQiaoYu/ToolAlpaca-13B \
+  --agent_prompt test_v2 \
+  --real
 
 python evaluation.py -api ${api_data_path} -out ./eval
 ```

@@ -54,6 +54,12 @@ Data format:
 ```
 
 ## Dataset Generation
+- Clone this repository and install packages
+```bash
+git clone git@github.com:tangqiaoyu/ToolAlpaca.git
+cd ToolAlpaca
+pip install -r requirements.txt
+```
 
 - download public-api data
 ```bash
@@ -80,7 +86,7 @@ python instance_generation/generation.py -api ./data/api_data.json -out ./data -
 ```
 
 ## Train
-To train Toolapaca, we need to create a prompt to organize the dataset in a format that the standard SFT training code can read, similar to what is done in build_dataset.py. Afterward, we can proceed with training using the standard SFT method, only optimizing the loss on `thought`, `action`, and `action input`.
+To train Toolapaca, we need to create a prompt to organize the dataset in a format that the standard SFT training code can read, similar to what is done in `build_dataset.py`. Afterward, we can proceed with training using the standard SFT method, only optimizing the loss on `thought`, `action`, and `action input`.
 
 You can Find our models on huggingface hub: [ToolAlpaca-7B](https://huggingface.co/TangQiaoYu/ToolAlpaca-7B), [ToolAlpaca-13B](https://huggingface.co/TangQiaoYu/ToolAlpaca-13B).
 

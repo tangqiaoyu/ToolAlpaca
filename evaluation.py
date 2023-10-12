@@ -5,7 +5,7 @@ import argparse
 from string import Template
 
 from utils import openai_chat_completions
-
+from langchain.schema import AgentAction, AgentFinish
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -60,13 +60,20 @@ if __name__ == "__main__":
             if retry_cases is not None and ques_id not in retry_cases.get(api_name, []):
                 continue
             original_data["statistics"]["num"] += 1
-            if "intermediate_steps" not in api_info["Instances"][ques_id] or len(api_info["Instances"][ques_id]["intermediate_steps"]) == 0:
+            tmp = {
+                        "id": ques_id,
+                        "input": "",
+                        "output": ""
+                    }
+            try:
+                Instance = eval(api_info["Instances"][ques_id])
+            except:
                 original_data["statistics"]["error_num"] += 1
-                tmp = {
-                    "id": ques_id,
-                    "input": "",
-                    "output": ""
-                }
+                original_data[api_name].append(tmp)
+                continue
+            if "intermediate_steps" not in api_info["Instances"][ques_id] or len(Instance["intermediate_steps"]) == 0:
+                original_data["statistics"]["error_num"] += 1
+                
                 original_data[api_name].append(tmp)
                 continue
 
@@ -76,12 +83,13 @@ if __name__ == "__main__":
                 standard_answer += f"{ans_id + 1}. Function: {ans['Action']}\nParameters: {ans['Action_Input']}\n"
             
             solution = ""
-            for sol_id, sol in enumerate(api_info["Instances"][ques_id]["intermediate_steps"]):
-                solution += f"{sol_id + 1}. Function: {sol[0][0]}\nParameters: {sol[0][1]}\nRetruns: {sol[1]}\n"
-            solution += f"{sol_id + 2}. Final Response: {api_info['Answers'][ques_id]['output']}"
+            for sol_id, sol in enumerate(Instance["intermediate_steps"]):
+                # print(sol_id, sol)
+                solution += f"{sol_id + 1}. Function: {sol[0].tool}\nParameters: {sol[0].tool_input}\nReturns: {sol[1]}\n"
+            solution += f"{sol_id + 2}. Final Response: {Instance['output']}"
 
             prompt = template.substitute(
-                documentation=api_info["api_description"],
+                documentation=api_info["NLDocumentation"],
                 instruction=ques,
                 standard=standard_answer,
                 solution=solution

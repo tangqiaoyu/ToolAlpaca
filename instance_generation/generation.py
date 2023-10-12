@@ -84,12 +84,10 @@ for api_idx, api in tqdm(enumerate(api_data)):
                       " ".join([f"{k}={v}" for k, v in api["Authentication"].items()])
             try:
                 output = agent(inst)
-                json.dumps(output, ensure_ascii=4)
-            except json.JSONDecodeError:
                 output = str(output)
-            # except Exception as e:
-            #     logger.error(e)
-            #     output = {"error": str(e)}  
+            except Exception as e:
+                logger.error(e)
+                output = {"error": str(e)} 
             
             if args.use_cache:
                 res = requests.get(f"{args.server_url}/__simulator_cache__/clear/{api['Name']}")

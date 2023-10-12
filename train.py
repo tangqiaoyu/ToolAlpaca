@@ -17,7 +17,7 @@ from dataclasses import dataclass, field
 import json
 import pathlib
 from typing import Dict, Optional, Sequence
-
+import os
 import torch
 from torch.utils.data import Dataset
 import transformers
@@ -46,7 +46,7 @@ class TrainingArguments(transformers.TrainingArguments):
     cache_dir: Optional[str] = field(default=None)
     optim: str = field(default="adamw_torch")
     model_max_length: int = field(
-        default=512,
+        default=2048,
         metadata={
             "help":
             "Maximum sequence length. Sequences will be right padded (and possibly truncated)."
@@ -107,7 +107,7 @@ def preprocess(
             if cur_len != total_len:
                 rank0_print(f"WARNING: tokenization mismatch "
                             f"{cur_len} vs. {total_len}")
-                rank0_print(conversation)
+                # rank0_print(conversation)
 
     return dict(input_ids=input_ids, labels=targets,
                 attention_mask=input_ids.ne(tokenizer.pad_token_id))
@@ -190,10 +190,21 @@ def train():
         (ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
     local_rank = training_args.local_rank
+
+    config = transformers.AutoConfig.from_pretrained(
+        model_args.model_name_or_path,
+        cache_dir=training_args.cache_dir,
+    )
+
+    world_size = int(os.environ.get("WORLD_SIZE", 1))
+    ddp = world_size != 1
+    device_map = {"": int(os.environ.get("LOCAL_RANK") or 0)} if ddp else None
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_args.model_name_or_path,
         cache_dir=training_args.cache_dir,
     )
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         model_args.model_name_or_path,
         cache_dir=training_args.cache_dir,

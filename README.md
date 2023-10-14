@@ -88,6 +88,31 @@ python instance_generation/generation.py -api ./data/api_data.json -out ./data -
 ## Train
 To train Toolapaca, we need to create a prompt to organize the dataset in a format that the standard SFT training code can read, similar to what is done in `build_dataset.py`. Afterward, we can proceed with training using the standard SFT method, only optimizing the loss on `thought`, `action`, and `action input`.
 
+```bash
+deepspeed --num_gpus=2 --master_port=12345 train.py \
+    --deepspeed ${deepspeed config path} \
+    --model_name_or_path ${path to base model like vicuna-7b}  \
+    --data_path ${data path} \
+    --bf16 True \
+    --output_dir outputs/vicuna-7b-toolalpaca/ \
+    --num_train_epochs 3 \
+    --per_device_train_batch_size 32 \
+    --per_device_eval_batch_size 1 \
+    --gradient_accumulation_steps 2 \
+    --evaluation_strategy "no" \
+    --save_strategy "epoch" \
+    --save_total_limit 10 \
+    --learning_rate 2e-5 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --tf32 True \
+    --model_max_length 2048 \
+    --gradient_checkpointing True \
+    --lazy_preprocess True
+```
+
 You can Find our models on huggingface hub: [ToolAlpaca-7B](https://huggingface.co/TangQiaoYu/ToolAlpaca-7B), [ToolAlpaca-13B](https://huggingface.co/TangQiaoYu/ToolAlpaca-13B).
 
 ## Evaluation

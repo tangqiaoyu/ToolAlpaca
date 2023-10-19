@@ -78,10 +78,10 @@ if __name__ == "__main__":
             solution = ""
             for sol_id, sol in enumerate(api_info["Instances"][ques_id]["intermediate_steps"]):
                 solution += f"{sol_id + 1}. Function: {sol[0][0]}\nParameters: {sol[0][1]}\nRetruns: {sol[1]}\n"
-            solution += f"{sol_id + 2}. Final Response: {api_info['Answers'][ques_id]['output']}"
+            solution += f"{sol_id + 2}. Final Response: {api_info['Instances'][ques_id]['output']}"
 
             prompt = template.substitute(
-                documentation=api_info["api_description"],
+                documentation=api_info["NLDocumentation"],
                 instruction=ques,
                 standard=standard_answer,
                 solution=solution

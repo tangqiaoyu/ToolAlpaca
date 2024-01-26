@@ -126,7 +126,7 @@ python instance_generation/generation.py \
   -api ./data/eval_simulated.json \
   -out ./eval \
   -llm TangQiaoYu/ToolAlpaca-13B \
-  --agent_prompt test_v2 \
+  --agent_prompt test_v1 \
   --use_cache
 
 # evaluation with LLM like GPT-4
@@ -141,7 +141,7 @@ python instance_generation/generation.py \
   -api ./data/eval_real.json \
   -out ./data \
   -llm TangQiaoYu/ToolAlpaca-13B \
-  --agent_prompt test_v2 \
+  --agent_prompt test_v1 \
   --real
 
 python evaluation.py -api ${api_data_path} -out ./eval

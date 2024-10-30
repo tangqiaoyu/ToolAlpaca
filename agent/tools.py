@@ -165,7 +165,7 @@ class RetrievalTool(Tool):
 
             return {"retrieved_info": outputs}
         
-        description = """Retrieve specified information from a file. This tool can ONLY be used when you recieve the message 'The output is too long. You need to use the 'retrievalDataFromFile' function to retrieve the output from the file: <file_path>'.
+        description = """Retrieve specified information from a file. This tool can ONLY be used when you receive the message 'The output is too long. You need to use the 'retrievalDataFromFile' function to retrieve the output from the file: <file_path>'.
 Parameters: {{"file_path": "Required. String. The path to the file from which information needs to be retrieved.", "query": "Required. String. The specific information to be retrieved from the file."}}
 Output: The retrieved information from the file.
  - Format: text/json
